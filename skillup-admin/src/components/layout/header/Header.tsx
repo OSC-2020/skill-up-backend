@@ -13,9 +13,9 @@ export default class Header extends Component {
                         <span className="ml-3 text-xl skillup-text-color-primary">SkillUp-Admin</span>
                     </Link>
                     <nav className="md:mr-auto md:ml-4 md:pl-4 md:border-l md:border-gray-300 flex flex-wrap items-center text-base justify-center">
-                        <HeaderTab title="Home" Icon={FaHome} isActive={true} />
-                        <HeaderTab title="Books" Icon={FaBook} />
-                        <HeaderTab title="Changes" Icon={FaChargingStation} />
+                        <HeaderTab title="Home" Icon={FaHome} naviagetTo="/" />
+                        <HeaderTab title="Books" Icon={FaBook} naviagetTo="/books" />
+                        <HeaderTab title="Changes" Icon={FaChargingStation} naviagetTo="/404" />
                     </nav>
                     <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 skillup-text-color-primary rounded text-base mt-4 md:mt-0 transition-colors focus:outline-none hover:skillup-background-color-primary hover:text-white">
                         Log in
