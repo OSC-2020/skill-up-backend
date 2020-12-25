@@ -1,0 +1,30 @@
+body {
+    --app-color: #057CED;
+    --app-background-color: #D7EBFE;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+
+    @variants hover,
+    focus {
+        .skillup-text-color-primary{
+            color: var(--app-color);
+        }
+
+        .skillup-background-color-primary{
+            background-color: var(--app-color);
+        }
+
+        .skillup-background-color-bg {
+            background-color: var(--app-background-color);
+        }
+
+        .skillup-border-color-primary{
+            border-color: var(--app-color);
+        }
+    }
+}
