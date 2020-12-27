@@ -1,6 +1,6 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
 import BooksList from "./list/BooksList";
-import BookDetail from "./detail/BookDetail";
+import { BookDetail } from "./detail/BookDetail";
 
 export const Books = () => {
     return (

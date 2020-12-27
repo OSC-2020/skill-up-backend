@@ -17,7 +17,7 @@ interface State {
 export default class ChapterTile extends Component<Props, State> {
     state = { currentlyEditing: false };
     view: any;
-    area: any;
+    input: HTMLTextAreaElement | undefined;
 
     getHorizMargin = (index: number) => {
         const pos = index % 4;
@@ -31,28 +31,28 @@ export default class ChapterTile extends Component<Props, State> {
 
     editStart(e: React.MouseEvent) {
         this.view = e.currentTarget;
-        this.area = document.createElement('input');
-        this.area.className = 'edit';
-        this.area.value = e.currentTarget.innerHTML;
+        this.input = document.createElement('textarea');
+        this.input.className = 'p-1 border-2 border-gray-100';
+        this.input.value = e.currentTarget.innerHTML;
 
-        this.area.onkeydown = (event: KeyboardEvent) => {
+        this.input.onkeydown = (event: KeyboardEvent) => {
             if (event.key == 'Enter') {
-                this.area.blur();
+                this.input?.blur();
             }
         };
 
-        this.area.onblur = () => {
+        this.input.onblur = () => {
             this.editEnd();
         };
 
-        this.view.replaceWith(this.area);
-        this.area.focus();
+        this.view.replaceWith(this.input);
+        this.input.focus();
     }
 
     editEnd() {
         // TODO: Save data to DB and store here
-        this.view.innerHTML = this.area.value;
-        this.area.replaceWith(this.view);
+        this.view.innerHTML = this.input?.value;
+        this.input?.replaceWith(this.view);
     }
 
     render() {
@@ -60,10 +60,10 @@ export default class ChapterTile extends Component<Props, State> {
             <div className={"p-2 rounded-md skillup-background-color-bg font-medium shadow-lg mt-5 w-2/3 flex items-center justify-between" + (dynamicCSSClass(this.getHorizMargin(this.props.index)))}>
 
                 <span onClick={(e) => this.editStart(e)}
-                    className="cursor-pointer">
+                    className="cursor-pointer w-4/5">
                     {this.props.title}
                 </span>
-                <FaTrash color="red" className="cursor-pointer" />
+                <FaTrash color="red" className="cursor-pointer text-base w-1/5" />
             </div>
         );
     }
