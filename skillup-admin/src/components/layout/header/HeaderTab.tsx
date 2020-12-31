@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { IconType } from 'react-icons';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
     title: string;

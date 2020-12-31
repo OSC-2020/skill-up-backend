@@ -1,11 +1,51 @@
-import React, { Component, ReactElement } from 'react';
-import ChapterTile from "./ChapterTile";
-import "./BookDetail.css";
+import React, { useState } from 'react';
+import { FaArrowsAlt } from 'react-icons/fa';
+import {
+    arrayMove,
+    SortableContainer,
+    SortableElement,
+    SortableHandle
+} from 'react-sortable-hoc';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
+import "./BookDetail.css";
+import ChapterTile from "./ChapterTile";
+
+const DragHandle = SortableHandle(() => <FaArrowsAlt className="text-gray-500 cursor-move mr-2" />);
+
+const SortableItem = SortableElement(
+    ({ id, title, idx }: {
+        id: string;
+        title: string;
+        idx: number;
+    }) => (<ChapterTile id={id} title={title} index={idx} >
+        <DragHandle />
+    </ChapterTile>)
+);
+const SortableList = SortableContainer(({ chapters }: { chapters: any[]; }) => {
+    return (
+        <div className="flex flex-col-reverse overflow-y-auto bookDetail__chapters">
+            {
+                chapters.map((chapter, index) => (<SortableItem idx={index} index={index} title={chapter.title} id={chapter.id} />))
+            }
+        </div>
+    );
+});
+
 
 export const BookDetail = () => {
-    const chapters = getDummyData();
+    const [chapters, setchapters] = useState(getDummyData());
+
+    const onSortEnd = ({
+        oldIndex,
+        newIndex
+    }: {
+        oldIndex: number;
+        newIndex: number;
+    }) =>
+        setchapters([
+            ...arrayMove(chapters, oldIndex, newIndex)]);
+
 
     return (
         <main className="flex py-5 w-full">
@@ -15,10 +55,8 @@ export const BookDetail = () => {
             </nav>
             <section className="w-full ml-5 px-5 flex flex-col items-center">
                 <MobileLayout>
-                    <ScrollToBottom scrollBehaviour="smooth">
-                        {chapters.map((chapter, index) =>
-                            <ChapterTile id={chapter.id} title={chapter.title} index={index} />
-                        )}
+                    <ScrollToBottom scrollBehaviour="smooth" className="h-full flex flex-col-reverse">
+                        <SortableList useDragHandle chapters={chapters} onSortEnd={onSortEnd} />
                     </ScrollToBottom>
                 </MobileLayout>
             </section>
@@ -31,77 +69,45 @@ export const BookDetail = () => {
 function getDummyData() {
     const arr = [
         {
-            id: "",
+            position: 0,
+            id: "0",
             title: "string1"
         },
         {
-            id: "",
+            position: 1,
+            id: "1",
             title: "number2"
         },
         {
-            id: "",
+            position: 2,
+            id: "2",
             title: "var3"
         },
         {
-            id: "",
+            position: 3,
+            id: "3",
             title: "let4"
         },
         {
-            id: "",
+            position: 4,
+            id: "4",
             title: "const5"
         },
         {
-            id: "",
+            position: 5,
+            id: "5",
             title: "let6"
         },
         {
-            id: "",
+            position: 6,
+            id: "6",
             title: "const7"
         },
         {
-            id: "",
+            position: 7,
+            id: "7",
             title: "let8"
-        },
-        {
-            id: "",
-            title: "const8"
-        },
-        {
-            id: "",
-            title: "string1"
-        },
-        {
-            id: "",
-            title: "number2"
-        },
-        {
-            id: "",
-            title: "var3"
-        },
-        {
-            id: "",
-            title: "let4"
-        },
-        {
-            id: "",
-            title: "const5"
-        },
-        {
-            id: "",
-            title: "let6"
-        },
-        {
-            id: "",
-            title: "const7"
-        },
-        {
-            id: "",
-            title: "let8"
-        },
-        {
-            id: "",
-            title: "const8"
-        },
+        }
     ];
-    return [...arr, ...arr, ...arr];
+    return [...arr];
 }

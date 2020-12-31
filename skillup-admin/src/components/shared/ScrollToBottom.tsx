@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 interface Props {
     scrollBehaviour?: 'auto' | 'smooth';
     children: React.ReactNode;
+    className?: string;
 }
 
 
@@ -24,7 +25,7 @@ export default class ScrollToBottom extends Component<Props> {
 
     render() {
         return (
-            <div>
+            <div className={this.props.className}>
                 {this.props.children}
                 <div style={{ float: "left", clear: "both" }}
                     ref={(el) => { this.messagesEnd = el; }}>
