@@ -56,7 +56,7 @@ export default class ChapterTile extends Component<Props, State> {
 
     render() {
         return (
-            <div className={"p-2 rounded-md skillup-background-color-bg font-medium shadow-lg mt-5 w-2/3 flex items-center justify-between" + (dynamicCSSClass(this.getHorizMargin(this.props.index)))}>
+            <div className={"p-2 rounded-md skillup-background-color-bg font-medium shadow-lg w-2/3 flex items-center justify-between" + (dynamicCSSClass(this.getHorizMargin(this.props.index)))}>
                 {this.props.children}
                 <span onClick={(e) => this.editStart(e)}
                     className="cursor-pointer w-4/5">

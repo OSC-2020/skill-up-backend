@@ -3,3 +3,17 @@
     background: transparent;
     /* make scrollbar transparent */
 }
+
+
+.bookDetail__addChapter:hover:after {
+    position: absolute;
+    /* content: ''; */
+    height: 1rem;
+    width: 1rem;
+    right: 0;
+    background-color: var(--app-color);
+    color: white;
+    border-radius: 50%;
+    border-top-left-radius: 0;
+    transform: translate(0, -48%) rotate(-45deg);
+}

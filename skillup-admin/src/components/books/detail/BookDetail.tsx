@@ -1,52 +1,12 @@
-import React, { useState } from 'react';
-import { FaArrowsAlt } from 'react-icons/fa';
-import {
-    arrayMove,
-    SortableContainer,
-    SortableElement,
-    SortableHandle
-} from 'react-sortable-hoc';
+import React from 'react';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
 import "./BookDetail.css";
 import ChapterTile from "./ChapterTile";
 
-const DragHandle = SortableHandle(() => <FaArrowsAlt className="text-gray-500 cursor-move mr-2" />);
-
-const SortableItem = SortableElement(
-    ({ id, title, idx }: {
-        id: string;
-        title: string;
-        idx: number;
-    }) => (<ChapterTile id={id} title={title} index={idx} >
-        <DragHandle />
-    </ChapterTile>)
-);
-const SortableList = SortableContainer(({ chapters }: { chapters: any[]; }) => {
-    return (
-        <div className="flex flex-col-reverse overflow-y-auto bookDetail__chapters">
-            {
-                chapters.map((chapter, index) => (<SortableItem idx={index} index={index} title={chapter.title} id={chapter.id} />))
-            }
-        </div>
-    );
-});
-
 
 export const BookDetail = () => {
-    const [chapters, setchapters] = useState(getDummyData());
-
-    const onSortEnd = ({
-        oldIndex,
-        newIndex
-    }: {
-        oldIndex: number;
-        newIndex: number;
-    }) =>
-        setchapters([
-            ...arrayMove(chapters, oldIndex, newIndex)]);
-
-
+    const chapters = getDummyData();
     return (
         <main className="flex py-5 w-full">
             <nav className="p-3 rounded-md skillup-background-color-bg font-medium shadow-lg w-1/4">
@@ -56,7 +16,16 @@ export const BookDetail = () => {
             <section className="w-full ml-5 px-5 flex flex-col items-center">
                 <MobileLayout>
                     <ScrollToBottom scrollBehaviour="smooth" className="h-full flex flex-col-reverse">
-                        <SortableList useDragHandle chapters={chapters} onSortEnd={onSortEnd} />
+                        <div className="flex flex-col-reverse overflow-y-auto bookDetail__chapters">
+                            {
+                                chapters.map((chapter, index) => (
+                                    <div>
+                                        <ChapterTile id={chapter.id} title={chapter.title} index={index} />
+                                        <span className="flex rounded my-3 w-full hover:bg-blue-500 h-0.5 bg-blue-200 relative cursor-pointer bookDetail__addChapter"></span>
+                                    </div>
+                                ))
+                            }
+                        </div>
                     </ScrollToBottom>
                 </MobileLayout>
             </section>
