@@ -7,7 +7,7 @@ export const Books = () => {
         <Switch>
             <Route path='/books/list' component={BooksList} />
             <Route path='/books/detail/:bookId' component={BookDetail} />
-            <Redirect to='/books/detail/rahul' />
+            <Redirect to='/books/list' />
         </Switch>
     );
 };
