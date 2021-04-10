@@ -1,13 +1,15 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from "react-router-dom";
 import BooksList from "./list/BooksList";
 import { BookDetail } from "./detail/BookDetail";
+import { CreateBookList } from "./list/CreateBookList";
 
 export const Books = () => {
-    return (
-        <Switch>
-            <Route path='/books/list' component={BooksList} />
-            <Route path='/books/detail/:bookId' component={BookDetail} />
-            <Redirect to='/books/list' />
-        </Switch>
-    );
+  return (
+    <Switch>
+      <Route path="/books/list/create" component={CreateBookList} />
+      <Route path="/books/list" component={BooksList} />
+      <Route path="/books/detail/:bookId" component={BookDetail} />
+      <Redirect to="/books/list" />
+    </Switch>
+  );
 };
