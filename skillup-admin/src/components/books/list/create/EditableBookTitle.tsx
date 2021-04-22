@@ -1,5 +1,5 @@
 import React from "react";
-import { arrayOfSize } from "../../../utilities/array";
+import { arrayOfSize } from "../../../../utilities/array";
 
 interface EditableBookTileProps {}
 
@@ -34,7 +34,7 @@ interface Props {
   groupSize?: number;
 }
 
-export const EditableBookListTile = (props: Props) => {
+export const EditableBookGroupTile = (props: Props) => {
   let groupSizeArray = arrayOfSize(props.groupSize || 4);
   return (
     <div className="container py-12 mx-auto">

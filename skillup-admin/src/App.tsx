@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./components/layout/header/Header";
 import { Books } from "./components/books/Books";
@@ -10,10 +10,8 @@ function App() {
         <Header />
         <main className="container mx-auto flex flex-wrap px-5 flex-col md:flex-row items-center ">
           <Switch>
-            <Route path='/books' component={Books} />
-            <Route path='/' >
-              Homepage
-              </Route>
+            <Route path="/books" component={Books} />
+            <Route path="/">Homepage</Route>
           </Switch>
         </main>
       </div>
