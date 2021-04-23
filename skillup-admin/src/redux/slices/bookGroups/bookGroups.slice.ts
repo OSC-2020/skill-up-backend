@@ -6,7 +6,7 @@ interface IBooks {
   id?: string;
   title: string;
   uiType?: number;
-  footerText?: string;
+  description?: string;
 }
 
 interface IBookGroups {

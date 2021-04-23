@@ -1,3 +1,4 @@
-const arrayOfSize = (size: number) => Array.from({ length: size }, (x, i) => i);
+const arrayOfSize = (size: number, fillInWith: any = null) =>
+  Array.from({ length: size }, (x, i) => (fillInWith ? fillInWith : i));
 
 export { arrayOfSize };

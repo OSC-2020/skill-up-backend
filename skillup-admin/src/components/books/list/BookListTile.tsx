@@ -15,7 +15,7 @@ export const BookTile = (props: BookTileProps) => {
         <h2 className="text-lg text-gray-900 font-medium title-font mb-4">
           {props.title}
         </h2>
-        <p className="leading-relaxed text-base">{props.footerText}</p>
+        <p className="leading-relaxed text-base">{props.description}</p>
       </div>
     </div>
   );
@@ -39,7 +39,7 @@ export const BookListTile = (props: Props) => {
       </div>
       <div className="flex flex-wrap -m-4">
         {props.data.map((v) => (
-          <BookTile title={v.title} footerText={v.footerText} />
+          <BookTile title={v.title} description={v.description} />
         ))}
       </div>
     </div>
