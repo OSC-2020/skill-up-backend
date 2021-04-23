@@ -1,10 +1,8 @@
 import React from "react";
+import { IBooks } from "../../../redux/slices/bookGroups/bookGroups.slice";
 
-interface BookTileProps {
-  sub: string;
-  title: string;
-  footerText: string;
-  editable?: string;
+interface BookTileProps extends IBooks {
+  sub?: string;
 }
 
 export const BookTile = (props: BookTileProps) => {
@@ -24,9 +22,8 @@ export const BookTile = (props: BookTileProps) => {
 };
 
 interface Props {
-  data: BookTileProps[];
+  data: IBooks[];
   title: string;
-  editable?: boolean;
 }
 
 export const BookListTile = (props: Props) => {
@@ -42,7 +39,7 @@ export const BookListTile = (props: Props) => {
       </div>
       <div className="flex flex-wrap -m-4">
         {props.data.map((v) => (
-          <BookTile sub={v.sub} title={v.title} footerText={v.footerText} />
+          <BookTile title={v.title} footerText={v.footerText} />
         ))}
       </div>
     </div>

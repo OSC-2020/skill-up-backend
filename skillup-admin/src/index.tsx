@@ -3,17 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Firebase, { FirebaseContext } from "./Firebase";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <FirebaseContext.Provider value={new Firebase()}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </FirebaseContext.Provider>
+    <Provider store={store}>
+      <App />
+    </Provider>
     ,
   </React.StrictMode>,
   document.getElementById("root")
