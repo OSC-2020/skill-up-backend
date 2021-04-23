@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { firebaseInstance } from "../../../Firebase";
+import { getAllBooksFromFirestore } from "../../../Firebase/bookGroups/crud";
 import { setLoadedOnce } from "./bookGroups.slice";
 
 //#region Thunks
@@ -7,9 +7,8 @@ const fetchAllBookGroups = createAsyncThunk(
   "bookGroups/fetchAll",
   async (_, thunkAPI) => {
     thunkAPI.dispatch(setLoadedOnce(true));
-    const bookRef = firebaseInstance.firestore.collection("/book_groups");
     try {
-      const booksDocs = await bookRef.get();
+      const booksDocs = await getAllBooksFromFirestore();
       const books: any = [];
       booksDocs.docs.forEach((doc) => {
         books.push(doc.data());

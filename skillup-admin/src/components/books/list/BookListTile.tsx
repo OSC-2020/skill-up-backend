@@ -38,8 +38,8 @@ export const BookListTile = (props: Props) => {
         </div>
       </div>
       <div className="flex flex-wrap -m-4">
-        {props.data.map((v) => (
-          <BookTile title={v.title} description={v.description} />
+        {props.data.map((v, idx) => (
+          <BookTile title={v.title} description={v.description} key={idx} />
         ))}
       </div>
     </div>

@@ -4,38 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { fetchAllBookGroups } from "../../../redux/slices/bookGroups/bookGroups.slice";
 import { BookListTile } from "./BookListTile";
 
-const data = [
-  {
-    sub: "SUBTITLE",
-    title: "Chichen Itza",
-    footerText:
-      "Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-  },
-  {
-    sub: "SUBTITLE",
-    title: "Colosseum Roma",
-    footerText:
-      "Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-  },
-  {
-    sub: "SUBTITLE",
-    title: "Great Pyramid of Giza",
-    footerText:
-      "Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-  },
-  {
-    sub: "SUBTITLE",
-    title: "San Francisco",
-    footerText:
-      "Fingerstache flexitarian street art 8-bit waistcoat. Distillery hexagon disrupt edison bulbche.",
-  },
-];
-const titles = [
-  { title: "Interview", data: data },
-  { title: "Basic", data: data },
-  { title: "intermediate", data: data },
-];
-
 export default function BooksList() {
   const dispatch = useAppDispatch();
   const bookGroupsSlice = useAppSelector((state) => state.bookGroups);
@@ -49,8 +17,8 @@ export default function BooksList() {
       <NavLink to="/books/list/create">
         <button className="mt-5 skillup-btn">Create book list</button>
       </NavLink>
-      {bookGroupsSlice.groups.map((grp) => (
-        <BookListTile title={grp.title} data={grp.books} />
+      {bookGroupsSlice.groups.map((grp, idx) => (
+        <BookListTile title={grp.title} data={grp.books} key={idx} />
       ))}
     </section>
   );
