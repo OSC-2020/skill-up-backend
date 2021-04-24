@@ -1,15 +1,37 @@
 import { firebaseInstance } from "..";
+import { IBookGroups } from "../../redux/slices/bookGroups/bookGroups.slice";
+import RootCollections from "../CollectionNames";
+
+const bookGroupsRef = firebaseInstance.firestore.collection(
+  `/${RootCollections.BOOK_GROUPS}`
+);
+const booksRef = firebaseInstance.firestore.collection(
+  `/${RootCollections.BOOKS}`
+);
 
 //#region Create
+const saveBooksGroup = async (group: IBookGroups) => {
+  group.uiType = 100;
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    group.books.forEach((book) => {
+      const doc = booksRef.doc();
+      book.id = doc.id;
+      book.uiType = 100;
+
+      txn.set(doc, book);
+    });
+
+    const groupDoc = bookGroupsRef.doc();
+    txn.set(groupDoc, group);
+  });
+};
 //#region Create
 
 //#region Read
 const getAllBooksFromFirestore = async () => {
-  const bookRef = firebaseInstance.firestore.collection("/book_groups");
-  return await bookRef.get();
+  return await bookGroupsRef.get();
 };
 
-export { getAllBooksFromFirestore };
 //#region Read
 
 //#region Update
@@ -17,3 +39,5 @@ export { getAllBooksFromFirestore };
 
 //#region Delete
 //#region Delete
+
+export { getAllBooksFromFirestore, saveBooksGroup };

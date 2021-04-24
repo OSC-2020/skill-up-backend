@@ -1,6 +1,13 @@
 import { Form, Formik } from "formik";
 import React from "react";
-import { IBooks } from "../../../../redux/slices/bookGroups/bookGroups.slice";
+import { useHistory } from "react-router";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { saveNewBookGroup } from "../../../../redux/slices/bookGroups/bookGroups.middleware";
+import {
+  IBookGroups,
+  IBooks,
+  selectSavingState,
+} from "../../../../redux/slices/bookGroups/bookGroups.slice";
 import { arrayOfSize } from "../../../../utilities/array";
 import { EditableBookGroupTile } from "./EditableBookTitle";
 
@@ -8,37 +15,33 @@ interface Props {
   groupSize?: number;
 }
 
-interface IFormValues {
-  groupTitle: string;
-  books: IBooks[];
-}
-
 export const CreateBookGroup = (props: Props) => {
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+  const savingState = useAppSelector(selectSavingState);
+
+  if (savingState === "done") {
+    history.push("..");
+  }
+
   let groupSizeArray: IBooks[] = arrayOfSize(props.groupSize || 4, {
     title: "",
     description: "",
   } as IBooks);
-  const initialValues: IFormValues = {
-    groupTitle: "",
+  const initialValues: IBookGroups = {
+    title: "",
     books: groupSizeArray,
   };
 
-  const submitForm = (values: any) => {
-    console.log(
-      "🚀 ~ file: EditableBookTitle.tsx ~ line 40 ~ submitForm ~ values",
-      values
-    );
+  const submitForm = (values: IBookGroups) => {
+    dispatch(saveNewBookGroup(values));
   };
   return (
     <section className="text-gray-600 body-font w-full">
       <Formik initialValues={initialValues} onSubmit={submitForm}>
         <Form>
           <EditableBookGroupTile books={initialValues.books} />
-          <button
-            className="mt-3 mb-3 skillup-btn"
-            type="submit"
-            onSubmit={submitForm}
-          >
+          <button className="mt-3 mb-3 skillup-btn" type="submit">
             Save
           </button>
         </Form>

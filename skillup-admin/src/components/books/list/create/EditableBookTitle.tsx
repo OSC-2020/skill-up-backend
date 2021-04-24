@@ -45,7 +45,7 @@ export const EditableBookGroupTile = (props: Props) => {
         <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
             <Field
-              name="groupTitle"
+              name="title"
               placeholder="Group Title"
               className="rounded pl-2 pr-2 pt-1 pb-1"
             />
