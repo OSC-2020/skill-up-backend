@@ -38,6 +38,20 @@ const getAllBooksFromFirestore = async () => {
 //#region Update
 
 //#region Delete
+
+const deleteBookGroupInFirestore = async (groupId: string) => {
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    const groupRefToDelete = bookGroupsRef.doc(groupId);
+    const groupData: IBookGroups = (
+      await txn.get(groupRefToDelete)
+    ).data() as IBookGroups;
+    groupData.books.forEach((book) => {
+      const refToDelete = booksRef.doc(book.id);
+      txn.delete(refToDelete);
+    });
+    txn.delete(groupRefToDelete);
+  });
+};
 //#region Delete
 
-export { getAllBooksFromFirestore, saveBooksGroup };
+export { getAllBooksFromFirestore, saveBooksGroup, deleteBookGroupInFirestore };

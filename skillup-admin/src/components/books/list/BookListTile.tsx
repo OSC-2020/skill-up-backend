@@ -1,4 +1,6 @@
 import React from "react";
+import { useAppDispatch } from "../../../redux/hooks";
+import { deleteBookGroup } from "../../../redux/slices/bookGroups/bookGroups.middleware";
 import { IBooks } from "../../../redux/slices/bookGroups/bookGroups.slice";
 
 interface BookTileProps extends IBooks {
@@ -24,16 +26,27 @@ export const BookTile = (props: BookTileProps) => {
 interface Props {
   data: IBooks[];
   title: string;
+  id: string;
 }
 
 export const BookListTile = (props: Props) => {
+  const dispatch = useAppDispatch();
+  const deleteGroup = () => {
+    dispatch(deleteBookGroup(props.id));
+  };
+
   return (
     <div className="container py-12 mx-auto">
       <div className="flex flex-wrap w-full mb-10">
-        <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
-            {props.title}
-          </h1>
+        <div className="w-full mb-6 lg:mb-0">
+          <div className="flex justify-between">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+              {props.title}
+            </h1>
+            <button className="skillup-btn-danger" onClick={deleteGroup}>
+              Delete
+            </button>
+          </div>
           <div className="h-1 w-20 bg-indigo-500 rounded"></div>
         </div>
       </div>

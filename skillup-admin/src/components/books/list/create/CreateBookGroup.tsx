@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { saveNewBookGroup } from "../../../../redux/slices/bookGroups/bookGroups.middleware";
 import {
@@ -21,7 +21,9 @@ export const CreateBookGroup = (props: Props) => {
   const savingState = useAppSelector(selectSavingState);
 
   if (savingState === "done") {
-    history.push("..");
+    setTimeout(() => {
+      history.push("/books/list");
+    }, 200);
   }
 
   let groupSizeArray: IBooks[] = arrayOfSize(props.groupSize || 4, {
@@ -41,7 +43,7 @@ export const CreateBookGroup = (props: Props) => {
       <Formik initialValues={initialValues} onSubmit={submitForm}>
         <Form>
           <EditableBookGroupTile books={initialValues.books} />
-          <button className="mt-3 mb-3 skillup-btn" type="submit">
+          <button className="mt-3 mb-3 skillup-btn-primary" type="submit">
             Save
           </button>
         </Form>

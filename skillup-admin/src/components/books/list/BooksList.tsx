@@ -15,10 +15,15 @@ export default function BooksList() {
   return (
     <section className="text-gray-600 body-font px-5">
       <NavLink to="/books/list/create">
-        <button className="mt-5 skillup-btn">Create book list</button>
+        <button className="mt-5 skillup-btn-primary">Create book list</button>
       </NavLink>
       {bookGroupsSlice.groups.map((grp, idx) => (
-        <BookListTile title={grp.title} data={grp.books} key={idx} />
+        <BookListTile
+          title={grp.title}
+          data={grp.books}
+          id={grp.id as string}
+          key={idx}
+        />
       ))}
     </section>
   );

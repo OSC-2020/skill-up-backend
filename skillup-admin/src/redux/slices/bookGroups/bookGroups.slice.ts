@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { fetchAllBookGroups, saveNewBookGroup } from "./bookGroups.middleware";
+import {
+  deleteBookGroup,
+  fetchAllBookGroups,
+  saveNewBookGroup,
+} from "./bookGroups.middleware";
 
 //#region Declarations
 interface IBooks {
@@ -14,6 +18,7 @@ interface IBookGroups {
   title: string;
   books: IBooks[];
   uiType?: number;
+  id?: string;
 }
 
 interface IBookGoupsState {
@@ -21,6 +26,7 @@ interface IBookGoupsState {
   groups: IBookGroups[];
   loadedOnce: boolean;
   savingState: "" | "start" | "done" | "failed";
+  deletingState: "" | "start" | "done" | "failed";
 }
 
 const initialState: IBookGoupsState = {
@@ -28,6 +34,7 @@ const initialState: IBookGoupsState = {
   loadedOnce: false,
   groups: [],
   savingState: "",
+  deletingState: "",
 };
 //#endregion Declarations
 
@@ -45,6 +52,12 @@ export const bookGroupsSlice = createSlice({
       action: PayloadAction<"" | "start" | "done" | "failed">
     ) {
       state.savingState = action.payload;
+    },
+    setDeletingState(
+      state,
+      action: PayloadAction<"" | "start" | "done" | "failed">
+    ) {
+      state.deletingState = action.payload;
     },
     bookGroupsLoading(state, action) {
       // Use a "state machine" approach for loading state instead of booleans
@@ -73,6 +86,9 @@ export const bookGroupsSlice = createSlice({
     builder.addCase(saveNewBookGroup.fulfilled, (state) => {
       state.savingState = "";
     });
+    builder.addCase(deleteBookGroup.fulfilled, (state) => {
+      state.deletingState = "";
+    });
   },
 });
 //#endregion Reducer
@@ -80,6 +96,8 @@ export const bookGroupsSlice = createSlice({
 //#region Selectors
 
 const selectSavingState = (state: RootState) => state.bookGroups.savingState;
+const selectDeletingState = (state: RootState) =>
+  state.bookGroups.deletingState;
 
 //#endregion Selectors
 
@@ -90,10 +108,11 @@ export const {
   bookGroupsLoadFailed,
   setLoadedOnce,
   setSavingState,
+  setDeletingState,
 } = bookGroupsSlice.actions;
 
 export type { IBooks, IBookGroups, IBookGoupsState };
 export { fetchAllBookGroups };
-export { selectSavingState };
+export { selectSavingState, selectDeletingState };
 export default bookGroupsSlice.reducer;
 //#endregion exports
