@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hooks";
 import { deleteBookGroup } from "../../../redux/slices/bookGroups/bookGroups.middleware";
 import { IBooks } from "../../../redux/slices/bookGroups/bookGroups.slice";
@@ -43,9 +44,14 @@ export const BookListTile = (props: Props) => {
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
               {props.title}
             </h1>
-            <button className="skillup-btn-danger" onClick={deleteGroup}>
-              Delete
-            </button>
+            <article>
+              <NavLink to={`/books/list/edit/${props.id}`}>
+                <button className="skillup-btn mr-2">Edit</button>
+              </NavLink>
+              <button className="skillup-btn-danger" onClick={deleteGroup}>
+                Delete
+              </button>
+            </article>
           </div>
           <div className="h-1 w-20 bg-indigo-500 rounded"></div>
         </div>

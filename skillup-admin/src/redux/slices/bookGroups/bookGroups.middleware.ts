@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  deleteBookGroupInFirestore,
-  getAllBooksFromFirestore,
-  saveBooksGroup,
+  deleteBookGroup_DB,
+  getAllBooks_DB,
+  modifyBooksGroup_DB,
+  saveBooksGroup_DB,
 } from "../../../Firebase/bookGroups/crud";
 import {
   IBookGroups,
@@ -16,7 +17,7 @@ const fetchAllBookGroups = createAsyncThunk(
   "bookGroups/fetchAll",
   async (_, thunkAPI) => {
     thunkAPI.dispatch(setLoadedOnce(true));
-    const booksDocs = await getAllBooksFromFirestore();
+    const booksDocs = await getAllBooks_DB();
     const books: any = [];
     booksDocs.docs.forEach((doc) => {
       const group = doc.data() as IBookGroups;
@@ -32,7 +33,20 @@ const saveNewBookGroup = createAsyncThunk(
   async (group: IBookGroups, thunkApi) => {
     thunkApi.dispatch(setSavingState("start"));
     try {
-      await saveBooksGroup(group);
+      await saveBooksGroup_DB(group);
+      thunkApi.dispatch(setSavingState("done"));
+      thunkApi.dispatch(fetchAllBookGroups());
+    } catch (error) {
+      thunkApi.dispatch(setSavingState("failed"));
+    }
+  }
+);
+const modifyBookGroup = createAsyncThunk(
+  "bookGroups/modify",
+  async (group: IBookGroups, thunkApi) => {
+    thunkApi.dispatch(setSavingState("start"));
+    try {
+      await modifyBooksGroup_DB(group);
       thunkApi.dispatch(setSavingState("done"));
       thunkApi.dispatch(fetchAllBookGroups());
     } catch (error) {
@@ -46,7 +60,7 @@ const deleteBookGroup = createAsyncThunk(
   async (groupId: string, thunkApi) => {
     thunkApi.dispatch(setDeletingState("start"));
     try {
-      await deleteBookGroupInFirestore(groupId);
+      await deleteBookGroup_DB(groupId);
       thunkApi.dispatch(setDeletingState("done"));
       thunkApi.dispatch(fetchAllBookGroups());
     } catch (error) {
@@ -56,4 +70,9 @@ const deleteBookGroup = createAsyncThunk(
 );
 //#endregion Thunks
 
-export { fetchAllBookGroups, saveNewBookGroup, deleteBookGroup };
+export {
+  fetchAllBookGroups,
+  saveNewBookGroup,
+  modifyBookGroup,
+  deleteBookGroup,
+};

@@ -98,6 +98,8 @@ export const bookGroupsSlice = createSlice({
 const selectSavingState = (state: RootState) => state.bookGroups.savingState;
 const selectDeletingState = (state: RootState) =>
   state.bookGroups.deletingState;
+const selectBookGroupWithId = (groupId: string) => (state: RootState) =>
+  state.bookGroups.groups.find((grp) => grp.id === groupId);
 
 //#endregion Selectors
 
@@ -113,6 +115,6 @@ export const {
 
 export type { IBooks, IBookGroups, IBookGoupsState };
 export { fetchAllBookGroups };
-export { selectSavingState, selectDeletingState };
+export { selectSavingState, selectDeletingState, selectBookGroupWithId };
 export default bookGroupsSlice.reducer;
 //#endregion exports

@@ -1,6 +1,7 @@
 import { firebaseInstance } from "..";
 import { IBookGroups } from "../../redux/slices/bookGroups/bookGroups.slice";
 import RootCollections from "../CollectionNames";
+import DBError from "../DBError";
 
 const bookGroupsRef = firebaseInstance.firestore.collection(
   `/${RootCollections.BOOK_GROUPS}`
@@ -10,13 +11,13 @@ const booksRef = firebaseInstance.firestore.collection(
 );
 
 //#region Create
-const saveBooksGroup = async (group: IBookGroups) => {
-  group.uiType = 100;
+const saveBooksGroup_DB = async (group: IBookGroups) => {
+  group.uiType = group.uiType || 100;
   return firebaseInstance.firestore.runTransaction(async (txn) => {
     group.books.forEach((book) => {
       const doc = booksRef.doc();
       book.id = doc.id;
-      book.uiType = 100;
+      book.uiType = book.uiType || 100;
 
       txn.set(doc, book);
     });
@@ -25,11 +26,30 @@ const saveBooksGroup = async (group: IBookGroups) => {
     txn.set(groupDoc, group);
   });
 };
+const modifyBooksGroup_DB = async (group: IBookGroups) => {
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    const groupDoc = bookGroupsRef.doc();
+    group.books.forEach((book) => {
+      const doc = booksRef.doc(book.id);
+      txn.update(doc, book);
+    });
+
+    txn.update(groupDoc, group);
+  });
+};
 //#region Create
 
 //#region Read
-const getAllBooksFromFirestore = async () => {
+const getAllBooks_DB = async () => {
   return await bookGroupsRef.get();
+};
+
+const getBookGroupWithId_DB = async (id: string): Promise<IBookGroups> => {
+  const bookGroup = await bookGroupsRef.doc(id).get();
+  if (bookGroup.exists) {
+    return bookGroup.data() as IBookGroups;
+  }
+  throw DBError.notFoundError(`Group ID: [${id}] not found`);
 };
 
 //#region Read
@@ -39,7 +59,7 @@ const getAllBooksFromFirestore = async () => {
 
 //#region Delete
 
-const deleteBookGroupInFirestore = async (groupId: string) => {
+const deleteBookGroup_DB = async (groupId: string) => {
   return firebaseInstance.firestore.runTransaction(async (txn) => {
     const groupRefToDelete = bookGroupsRef.doc(groupId);
     const groupData: IBookGroups = (
@@ -54,4 +74,10 @@ const deleteBookGroupInFirestore = async (groupId: string) => {
 };
 //#region Delete
 
-export { getAllBooksFromFirestore, saveBooksGroup, deleteBookGroupInFirestore };
+export {
+  getAllBooks_DB,
+  getBookGroupWithId_DB,
+  saveBooksGroup_DB,
+  modifyBooksGroup_DB,
+  deleteBookGroup_DB,
+};
