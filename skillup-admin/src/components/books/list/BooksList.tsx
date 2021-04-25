@@ -13,7 +13,7 @@ export default function BooksList() {
   }
 
   return (
-    <section className="text-gray-600 body-font px-5">
+    <section className="text-gray-600 body-font px-5 w-full">
       <NavLink to="/books/list/create">
         <button className="mt-5 skillup-btn-primary">Create book list</button>
       </NavLink>

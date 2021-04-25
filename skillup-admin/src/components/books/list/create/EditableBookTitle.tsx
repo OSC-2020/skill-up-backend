@@ -11,7 +11,7 @@ export const EditableBookTile = (props: EditableBookTileProps) => {
   const titleName = `books[${props.idx}].title`;
   const descriptionName = `books[${props.idx}].description`;
   return (
-    <div className="xl:w-1/4 md:w-1/2 p-4">
+    <div className="xl:w-1/4 lg:w-1/4 md:w-1/2 sm:w-full w-full p-4">
       <div className="bg-gray-100 shadow-lg p-6 rounded-lg ">
         <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font mb-4">
           <Field
