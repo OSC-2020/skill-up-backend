@@ -1,7 +1,11 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hooks";
-import { deleteBookGroup } from "../../../redux/slices/bookGroups/bookGroups.middleware";
+import {
+  deleteBookGroup,
+  publishBookGroup,
+  unpublishBookGroup,
+} from "../../../redux/slices/bookGroups/bookGroups.middleware";
 import { IBooks } from "../../../redux/slices/bookGroups/bookGroups.slice";
 
 interface BookTileProps extends IBooks {
@@ -25,15 +29,23 @@ export const BookTile = (props: BookTileProps) => {
 };
 
 interface Props {
-  data: IBooks[];
-  title: string;
   id: string;
+  title: string;
+  isPublished: boolean;
+  data: IBooks[];
 }
 
 export const BookListTile = (props: Props) => {
   const dispatch = useAppDispatch();
   const deleteGroup = () => {
     dispatch(deleteBookGroup(props.id));
+  };
+  const changePublishState = () => {
+    if (props.isPublished) {
+      dispatch(unpublishBookGroup(props.id));
+    } else {
+      dispatch(publishBookGroup(props.id));
+    }
   };
 
   return (
@@ -48,6 +60,15 @@ export const BookListTile = (props: Props) => {
               <NavLink to={`/books/list/edit/${props.id}`}>
                 <button className="skillup-btn mr-2">Edit</button>
               </NavLink>
+              <button
+                className={
+                  "mr-2 " +
+                  (props.isPublished ? "skillup-btn" : "skillup-btn-success")
+                }
+                onClick={changePublishState}
+              >
+                {props.isPublished ? "Unpublish" : "Publish"}
+              </button>
               <button className="skillup-btn-danger" onClick={deleteGroup}>
                 Delete
               </button>

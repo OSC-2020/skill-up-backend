@@ -33,6 +33,7 @@ export const CreateBookGroup = (props: Props) => {
   const initialValues: IBookGroups = {
     title: "",
     books: groupSizeArray,
+    isPublished: false,
   };
 
   const submitForm = (values: IBookGroups) => {

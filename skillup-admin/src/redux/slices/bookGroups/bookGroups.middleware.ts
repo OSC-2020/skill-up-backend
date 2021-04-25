@@ -3,6 +3,7 @@ import {
   deleteBookGroup_DB,
   getAllBooks_DB,
   modifyBooksGroup_DB,
+  publishBookGroup_DB,
   saveBooksGroup_DB,
 } from "../../../Firebase/bookGroups/crud";
 import {
@@ -68,6 +69,34 @@ const deleteBookGroup = createAsyncThunk(
     }
   }
 );
+
+//#region Publish BookGroup
+const changePublishState = async (
+  groupId: string,
+  publish: boolean,
+  thunkApi: any
+) => {
+  thunkApi.dispatch(setSavingState("start"));
+  try {
+    await publishBookGroup_DB(groupId, publish);
+    thunkApi.dispatch(setSavingState("done"));
+  } catch (error) {
+    thunkApi.dispatch(setSavingState("failed"));
+  }
+  return groupId;
+};
+const publishBookGroup = createAsyncThunk(
+  "bookGroups/publish",
+  async (groupId: string, thunkApi) =>
+    await changePublishState(groupId, true, thunkApi)
+);
+const unpublishBookGroup = createAsyncThunk(
+  "bookGroups/unpublish",
+  async (groupId: string, thunkApi) =>
+    await changePublishState(groupId, false, thunkApi)
+);
+//#endregion Publish BookGroup
+
 //#endregion Thunks
 
 export {
@@ -75,4 +104,6 @@ export {
   saveNewBookGroup,
   modifyBookGroup,
   deleteBookGroup,
+  publishBookGroup,
+  unpublishBookGroup,
 };

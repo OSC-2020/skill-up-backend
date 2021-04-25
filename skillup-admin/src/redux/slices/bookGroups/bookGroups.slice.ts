@@ -3,7 +3,9 @@ import { RootState } from "../../store";
 import {
   deleteBookGroup,
   fetchAllBookGroups,
+  publishBookGroup,
   saveNewBookGroup,
+  unpublishBookGroup,
 } from "./bookGroups.middleware";
 
 //#region Declarations
@@ -19,6 +21,7 @@ interface IBookGroups {
   books: IBooks[];
   uiType?: number;
   id?: string;
+  isPublished: boolean;
 }
 
 interface IBookGoupsState {
@@ -89,6 +92,26 @@ export const bookGroupsSlice = createSlice({
     builder.addCase(deleteBookGroup.fulfilled, (state) => {
       state.deletingState = "";
     });
+    builder.addCase(
+      publishBookGroup.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.savingState = "";
+        const grp = state.groups.find(
+          (grp) => grp.id === action.payload
+        ) as IBookGroups;
+        grp.isPublished = true;
+      }
+    );
+    builder.addCase(
+      unpublishBookGroup.fulfilled,
+      (state, action: PayloadAction<string>) => {
+        state.savingState = "";
+        const grp = state.groups.find(
+          (grp) => grp.id === action.payload
+        ) as IBookGroups;
+        grp.isPublished = false;
+      }
+    );
   },
 });
 //#endregion Reducer

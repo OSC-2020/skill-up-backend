@@ -26,6 +26,7 @@ const saveBooksGroup_DB = async (group: IBookGroups) => {
     txn.set(groupDoc, group);
   });
 };
+
 const modifyBooksGroup_DB = async (group: IBookGroups) => {
   return firebaseInstance.firestore.runTransaction(async (txn) => {
     const groupDoc = bookGroupsRef.doc();
@@ -36,6 +37,10 @@ const modifyBooksGroup_DB = async (group: IBookGroups) => {
 
     txn.update(groupDoc, group);
   });
+};
+const publishBookGroup_DB = async (groupId: string, publish = false) => {
+  const doc = bookGroupsRef.doc(groupId);
+  await doc.update({ isPublished: publish });
 };
 //#region Create
 
@@ -80,4 +85,5 @@ export {
   saveBooksGroup_DB,
   modifyBooksGroup_DB,
   deleteBookGroup_DB,
+  publishBookGroup_DB,
 };

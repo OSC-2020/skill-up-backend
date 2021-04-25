@@ -19,9 +19,10 @@ export default function BooksList() {
       </NavLink>
       {bookGroupsSlice.groups.map((grp, idx) => (
         <BookListTile
-          title={grp.title}
-          data={grp.books}
           id={grp.id as string}
+          title={grp.title}
+          isPublished={grp.isPublished}
+          data={grp.books}
           key={idx}
         />
       ))}
