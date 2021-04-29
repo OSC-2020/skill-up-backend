@@ -1,6 +1,9 @@
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { fetchBookDetail } from "../../../redux/slices/bookChapters/bookChapters.middleware";
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
-import "./BookDetail.css";
+import "./BookChapters.css";
+import BookChaptersSideNav from "./BookDetailSideNav";
 import ChapterTile from "./ChapterTile";
 
 function deleteChapterFromList(id: number | string) {
@@ -28,14 +31,18 @@ function handleKeyDownOnInput(e: KeyboardEvent) {
   }
 }
 
-export const BookDetail = () => {
-  const chapters = getDummyData();
+export const BookChapters = () => {
+  const dispatch = useAppDispatch();
+  const bookDetailSlice = useAppSelector((state) => state.currentBookDetail);
+
+  if (!bookDetailSlice.loadedOnce) {
+    dispatch(fetchBookDetail());
+  }
+  const bookInfo = bookDetailSlice.bookInfo;
+  console.log("🚀 ~ file: BookChapters.tsx ~ line 42 ~ bookInfo", bookInfo);
   return (
     <main className="flex py-5 w-full">
-      <nav className="p-3 rounded-md skillup-background-color-bg font-medium shadow-lg w-1/4">
-        <div>Title: </div>
-        <div>Total Chapters: </div>
-      </nav>
+      <BookChaptersSideNav />
       <section className="w-full ml-5 px-5 flex flex-col items-center">
         <section className="w-72 pb-4 pt-2">
           <input
@@ -49,8 +56,8 @@ export const BookDetail = () => {
             scrollBehaviour="smooth"
             className="h-full flex flex-col-reverse"
           >
-            <div className="flex flex-col-reverse overflow-y-auto bookDetail__chapters">
-              {chapters.map((chapter, index) => (
+            <div className="flex flex-col-reverse overflow-y-auto bookChapters__chapters">
+              {bookInfo?.chapters.map((chapter, index) => (
                 <div>
                   <ChapterTile
                     id={chapter.id}
@@ -70,49 +77,3 @@ export const BookDetail = () => {
     </main>
   );
 };
-
-function getDummyData() {
-  const arr = [
-    {
-      position: 0,
-      id: "0",
-      title: "string1",
-    },
-    {
-      position: 1,
-      id: "1",
-      title: "number2",
-    },
-    {
-      position: 2,
-      id: "2",
-      title: "var3",
-    },
-    {
-      position: 3,
-      id: "3",
-      title: "let4",
-    },
-    {
-      position: 4,
-      id: "4",
-      title: "const5",
-    },
-    {
-      position: 5,
-      id: "5",
-      title: "let6",
-    },
-    {
-      position: 6,
-      id: "6",
-      title: "const7",
-    },
-    {
-      position: 7,
-      id: "7",
-      title: "let8",
-    },
-  ];
-  return [...arr];
-}

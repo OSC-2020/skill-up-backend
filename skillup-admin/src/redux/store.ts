@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import bookChaptersSlice from "./slices/bookChapters/bookChapters.slice";
 import bookGroupsSliceReducer from "./slices/bookGroups/bookGroups.slice";
 const store = configureStore({
   reducer: {
     bookGroups: bookGroupsSliceReducer,
+    currentBookDetail: bookChaptersSlice,
+    // cachedBookDetails
   },
 });
 

@@ -14,7 +14,10 @@ interface BookTileProps extends IBooks {
 
 export const BookTile = (props: BookTileProps) => {
   return (
-    <div className="xl:w-1/4 lg:w-1/4 md:w-1/2 sm:w-full w-full p-4">
+    <NavLink
+      to={`/books/detail/${props.id}`}
+      className="xl:w-1/4 lg:w-1/4 md:w-1/2 sm:w-full w-full p-4"
+    >
       <div className="bg-gray-100 shadow-lg p-6 rounded-lg">
         <h3 className="tracking-widest text-indigo-500 text-xs font-medium title-font">
           {props.sub}
@@ -24,7 +27,7 @@ export const BookTile = (props: BookTileProps) => {
         </h2>
         <p className="leading-relaxed text-base">{props.description}</p>
       </div>
-    </div>
+    </NavLink>
   );
 };
 
@@ -78,8 +81,13 @@ export const BookListTile = (props: Props) => {
         </div>
       </div>
       <div className="flex flex-wrap -m-4 w-full">
-        {props.data.map((v, idx) => (
-          <BookTile title={v.title} description={v.description} key={idx} />
+        {props.data.map((book, idx) => (
+          <BookTile
+            id={book.id}
+            title={book.title}
+            description={book.description}
+            key={idx}
+          />
         ))}
       </div>
     </div>

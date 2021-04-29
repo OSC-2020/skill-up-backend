@@ -62,22 +62,6 @@ export const bookGroupsSlice = createSlice({
     ) {
       state.deletingState = action.payload;
     },
-    bookGroupsLoading(state, action) {
-      // Use a "state machine" approach for loading state instead of booleans
-      if (state.loading === "idle") {
-        state.loading = "pending";
-      }
-    },
-    bookGroupsLoadSuccess(state, action) {
-      if (state.loading === "pending") {
-        state.loading = "idle";
-      }
-    },
-    bookGroupsLoadFailed(state, action) {
-      if (state.loading === "pending") {
-        state.loading = "idle";
-      }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -128,9 +112,6 @@ const selectBookGroupWithId = (groupId: string) => (state: RootState) =>
 
 //#region exports
 export const {
-  bookGroupsLoading,
-  bookGroupsLoadSuccess,
-  bookGroupsLoadFailed,
   setLoadedOnce,
   setSavingState,
   setDeletingState,
