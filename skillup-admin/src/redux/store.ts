@@ -1,11 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import bookChaptersSlice from "./slices/bookChapters/bookChapters.slice";
-import bookGroupsSliceReducer from "./slices/bookGroups/bookGroups.slice";
+import { configureStore } from '@reduxjs/toolkit';
+import bookChaptersSlice from './slices/bookChapters/bookChapters.slice';
+import bookGroupsSliceReducer from './slices/bookGroups/bookGroups.slice';
+import cachedSlice from './slices/cached/cached.slice';
+
 const store = configureStore({
   reducer: {
     bookGroups: bookGroupsSliceReducer,
     currentBookDetail: bookChaptersSlice,
-    // cachedBookDetails
+    cached: cachedSlice,
   },
 });
 

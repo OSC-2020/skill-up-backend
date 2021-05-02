@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../../store';
 import {
   deleteBookGroup,
   fetchAllBookGroups,
   publishBookGroup,
   saveNewBookGroup,
   unpublishBookGroup,
-} from "./bookGroups.middleware";
+} from './bookGroups.middleware';
 
 //#region Declarations
 interface IBooks {
@@ -25,25 +25,25 @@ interface IBookGroups {
 }
 
 interface IBookGoupsState {
-  loading: "idle" | "pending";
+  loading: 'idle' | 'pending';
   groups: IBookGroups[];
   loadedOnce: boolean;
-  savingState: "" | "start" | "done" | "failed";
-  deletingState: "" | "start" | "done" | "failed";
+  savingState: '' | 'start' | 'done' | 'failed';
+  deletingState: '' | 'start' | 'done' | 'failed';
 }
 
 const initialState: IBookGoupsState = {
-  loading: "idle",
+  loading: 'idle',
   loadedOnce: false,
   groups: [],
-  savingState: "",
-  deletingState: "",
+  savingState: '',
+  deletingState: '',
 };
 //#endregion Declarations
 
 //#region Reducer
 export const bookGroupsSlice = createSlice({
-  name: "bookGroups",
+  name: 'bookGroups',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -52,13 +52,13 @@ export const bookGroupsSlice = createSlice({
     },
     setSavingState(
       state,
-      action: PayloadAction<"" | "start" | "done" | "failed">
+      action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
     ) {
       state.savingState = action.payload;
     },
     setDeletingState(
       state,
-      action: PayloadAction<"" | "start" | "done" | "failed">
+      action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
     ) {
       state.deletingState = action.payload;
     },
@@ -68,33 +68,33 @@ export const bookGroupsSlice = createSlice({
       fetchAllBookGroups.fulfilled,
       (state, action: PayloadAction<IBookGroups[]>) => {
         state.groups = action.payload;
-      }
+      },
     );
     builder.addCase(saveNewBookGroup.fulfilled, (state) => {
-      state.savingState = "";
+      state.savingState = '';
     });
     builder.addCase(deleteBookGroup.fulfilled, (state) => {
-      state.deletingState = "";
+      state.deletingState = '';
     });
     builder.addCase(
       publishBookGroup.fulfilled,
       (state, action: PayloadAction<string>) => {
-        state.savingState = "";
+        state.savingState = '';
         const grp = state.groups.find(
-          (grp) => grp.id === action.payload
+          (grp) => grp.id === action.payload,
         ) as IBookGroups;
         grp.isPublished = true;
-      }
+      },
     );
     builder.addCase(
       unpublishBookGroup.fulfilled,
       (state, action: PayloadAction<string>) => {
-        state.savingState = "";
+        state.savingState = '';
         const grp = state.groups.find(
-          (grp) => grp.id === action.payload
+          (grp) => grp.id === action.payload,
         ) as IBookGroups;
         grp.isPublished = false;
-      }
+      },
     );
   },
 });

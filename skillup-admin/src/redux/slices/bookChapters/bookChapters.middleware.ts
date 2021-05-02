@@ -1,21 +1,14 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAllBooks_DB } from "../../../Firebase/bookGroups/crud";
-import { IBookChapters, setLoadedOnce } from "./bookChapters.slice";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getBookDetail_DB } from '../../../Firebase/bookChapters/crud';
+import { setLoadedOnce } from './bookChapters.slice';
 
 //#region Thunks
 const fetchBookDetail = createAsyncThunk(
-  "bookChapters/fetchBookData",
-  async (bookId, thunkAPI) => {
+  'bookChapters/fetchBookDetail',
+  async (bookId: string, thunkAPI): Promise<any> => {
     thunkAPI.dispatch(setLoadedOnce(true));
-    const booksDocs = await getAllBooks_DB();
-    const books: any = [];
-    booksDocs.docs.forEach((doc) => {
-      const group = doc.data() as IBookChapters;
-      group.id = doc.id;
-      books.push(group);
-    });
-    return books;
-  }
+    return await getBookDetail_DB(bookId);
+  },
 );
 
 //#endregion Thunks

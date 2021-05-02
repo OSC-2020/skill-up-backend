@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchBookDetail } from "../../../redux/slices/bookChapters/bookChapters.middleware";
+import { fetchBookDetail } from '../../../redux/slices/bookChapters/bookChapters.slice';
+import { IChapterInfoModel } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
 import "./BookChapters.css";
@@ -31,15 +32,15 @@ function handleKeyDownOnInput(e: KeyboardEvent) {
   }
 }
 
-export const BookChapters = () => {
+export const BookChapters = ({ match }: any) => {
   const dispatch = useAppDispatch();
   const bookDetailSlice = useAppSelector((state) => state.currentBookDetail);
 
+  const bookId = match.params.bookId;
   if (!bookDetailSlice.loadedOnce) {
-    dispatch(fetchBookDetail());
+    dispatch(fetchBookDetail(bookId));
   }
   const bookInfo = bookDetailSlice.bookInfo;
-  console.log("🚀 ~ file: BookChapters.tsx ~ line 42 ~ bookInfo", bookInfo);
   return (
     <main className="flex py-5 w-full">
       <BookChaptersSideNav />
@@ -57,8 +58,8 @@ export const BookChapters = () => {
             className="h-full flex flex-col-reverse"
           >
             <div className="flex flex-col-reverse overflow-y-auto bookChapters__chapters">
-              {bookInfo?.chapters.map((chapter, index) => (
-                <div>
+              {bookInfo?.chapters.map((chapter: IChapterInfoModel, index: number) => (
+                <div key={index}>
                   <ChapterTile
                     id={chapter.id}
                     title={chapter.title}
