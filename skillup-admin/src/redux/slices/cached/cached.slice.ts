@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  fetchBookDetail,
-  IBookChapters,
-} from '../bookChapters/bookChapters.slice';
+import { fetchBookDetail, IBookChapters } from '../bookChapters';
 
 //#region Declarations
 

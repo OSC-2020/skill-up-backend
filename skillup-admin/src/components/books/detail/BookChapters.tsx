@@ -1,11 +1,12 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchBookDetail } from '../../../redux/slices/bookChapters/bookChapters.slice';
-import { IChapterInfoModel } from '../../../redux/slices/chapterDetail/chapterDetail';
+import { fetchBookDetail } from '../../../redux/slices/bookChapters';
+import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
 import "./BookChapters.css";
 import BookChaptersSideNav from "./BookDetailSideNav";
 import ChapterTile from "./ChapterTile";
+import { CreateChapterInput } from "./CreateChapterInput";
 
 function deleteChapterFromList(id: number | string) {
   console.log(
@@ -26,17 +27,12 @@ function moveChapterDownInList(id: number | string) {
   );
 }
 
-function handleKeyDownOnInput(e: KeyboardEvent) {
-  if (e.key === "Enter") {
-    console.log("do validate");
-  }
-}
 
 export const BookChapters = ({ match }: any) => {
   const dispatch = useAppDispatch();
   const bookDetailSlice = useAppSelector((state) => state.currentBookDetail);
-
   const bookId = match.params.bookId;
+
   if (!bookDetailSlice.loadedOnce) {
     dispatch(fetchBookDetail(bookId));
   }
@@ -46,11 +42,7 @@ export const BookChapters = ({ match }: any) => {
       <BookChaptersSideNav />
       <section className="w-full ml-5 px-5 flex flex-col items-center">
         <section className="w-72 pb-4 pt-2">
-          <input
-            className="w-full p-2 rounded"
-            placeholder="Add new chapter"
-            onKeyDown={(e: any) => handleKeyDownOnInput(e)}
-          />
+          <CreateChapterInput savingState={bookDetailSlice.savingState} />
         </section>
         <MobileLayout>
           <ScrollToBottom
@@ -58,10 +50,10 @@ export const BookChapters = ({ match }: any) => {
             className="h-full flex flex-col-reverse"
           >
             <div className="flex flex-col-reverse overflow-y-auto bookChapters__chapters">
-              {bookInfo?.chapters.map((chapter: IChapterInfoModel, index: number) => (
+              {bookInfo?.chapters.map((chapter: IChapterInfo, index: number) => (
                 <div key={index}>
                   <ChapterTile
-                    id={chapter.id}
+                    id={chapter.id as string}
                     title={chapter.title}
                     index={index}
                     onDelete={deleteChapterFromList}

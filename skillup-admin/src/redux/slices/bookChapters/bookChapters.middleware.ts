@@ -3,6 +3,7 @@ import {
   createNewChapter_DB,
   getBookDetail_DB,
 } from '../../../Firebase/bookChapters/crud';
+import { AppDispatch, RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {
   IBookChapters,
@@ -19,18 +20,27 @@ const fetchBookDetail = createAsyncThunk(
   },
 );
 
-const createNewChapter = createAsyncThunk(
-  'bookChapters/createChapter',
-  async (data: { bookId: string; chapterInfo: IChapterInfo }, thunkApi) => {
-    thunkApi.dispatch(setSavingState('start'));
-    try {
-      await createNewChapter_DB(data.bookId, data.chapterInfo);
-      thunkApi.dispatch(setSavingState('done'));
-    } catch (error) {
-      thunkApi.dispatch(setSavingState('failed'));
-    }
-  },
-);
+const createNewChapter = createAsyncThunk<
+  // Return type of the payload creator
+  void,
+  // First argument to the payload creator
+  IChapterInfo,
+  {
+    // Optional fields for defining thunkApi field types
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>('bookChapters/createChapter', async (chapterInfo: IChapterInfo, thunkApi) => {
+  thunkApi.dispatch(setSavingState('start'));
+  const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
+  try {
+    await createNewChapter_DB(bookId, chapterInfo);
+    thunkApi.dispatch(fetchBookDetail(bookId));
+  } catch (error) {
+    console.log('🚀 ~ error', error);
+    thunkApi.dispatch(setSavingState('failed'));
+  }
+});
 //#endregion Thunks
 
 export { fetchBookDetail, createNewChapter };

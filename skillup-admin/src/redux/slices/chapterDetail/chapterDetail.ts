@@ -1,7 +1,10 @@
-interface IChapterInfoModel {
-  id: string;
+interface IChapterInfo {
+  id?: string;
   title: string;
-  isCompleted: boolean;
-  completedByCount: number;
+  completedByCount?: number;
 }
-export type { IChapterInfoModel };
+
+interface IChapterDetail extends IChapterInfo {
+  pos: number;
+}
+export type { IChapterInfo, IChapterDetail };

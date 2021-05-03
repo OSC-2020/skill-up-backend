@@ -60,7 +60,7 @@ export const bookChaptersSlice = createSlice({
       },
     );
     builder.addCase(createNewChapter.fulfilled, (state, action) => {
-      state.savingState = '';
+      state.savingState = 'done';
     });
   },
 });
@@ -83,9 +83,6 @@ export const {
 } = bookChaptersSlice.actions;
 
 export type { IBookChapters, IBookChaptersState };
-
-// WARNING: Don't know why or how this works, but we need to re-export in next line to make it work
-// you can not import it from middleware, insted it has to be imported from slice
 export { selectSavingState, selectDeletingState };
 export default bookChaptersSlice.reducer;
 //#endregion exports

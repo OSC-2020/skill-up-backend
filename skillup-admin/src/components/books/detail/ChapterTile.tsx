@@ -3,7 +3,7 @@ import { FaArrowDown, FaArrowUp, FaTrash } from "react-icons/fa";
 import { dynamicCSSClass } from "../../../utilities/string";
 
 interface Props {
-  id: string | number;
+  id: string;
   title: string;
   index: number;
   onDelete: (id: string | number) => void;
