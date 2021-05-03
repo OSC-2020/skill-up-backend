@@ -4,7 +4,5 @@ interface IChapterInfo {
   completedByCount?: number;
 }
 
-interface IChapterDetail extends IChapterInfo {
-  pos: number;
-}
+interface IChapterDetail extends IChapterInfo {}
 export type { IChapterInfo, IChapterDetail };

@@ -1,6 +1,9 @@
 import { firebaseInstance } from '..';
 import { IBookChapters } from '../../redux/slices/bookChapters';
-import { IChapterInfo } from '../../redux/slices/chapterDetail/chapterDetail';
+import {
+  IChapterDetail,
+  IChapterInfo,
+} from '../../redux/slices/chapterDetail/chapterDetail';
 import RootCollections, { BookChaptersCollections } from '../CollectionNames';
 
 const booksRef = firebaseInstance.firestore.collection(
@@ -23,7 +26,6 @@ const createNewChapter_DB = async (
   return firebaseInstance.firestore.runTransaction(async (txn) => {
     // 1. create a chapter doc
     // 2. Get chapters array
-    // 3. add pos to chapterInfo
     // 4. Add an entry to chapters array in book doc
     const bookRef = booksRef.doc(bookId);
     const newChapterRef = bookRef
@@ -32,9 +34,8 @@ const createNewChapter_DB = async (
     const { chapters: chaptersArrInDB } = (
       await txn.get(bookRef)
     ).data() as IBookChapters;
-    const chapterData = {
+    const chapterData: IChapterDetail = {
       ...chapterInfo,
-      pos: chaptersArrInDB.length,
       id: newChapterRef.id,
     };
     txn.set(newChapterRef, chapterData);
