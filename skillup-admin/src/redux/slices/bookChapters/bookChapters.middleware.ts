@@ -1,12 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   createNewChapter_DB,
+  deleteChapter_DB,
   getBookDetail_DB,
 } from '../../../Firebase/bookChapters/crud';
 import { AppDispatch, RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {
   IBookChapters,
+  setDeletingState,
   setLoadedOnce,
   setSavingState,
 } from './bookChapters.slice';
@@ -41,6 +43,23 @@ const createNewChapter = createAsyncThunk<
     thunkApi.dispatch(setSavingState('failed'));
   }
 });
+const deleteChapter = createAsyncThunk<
+  void,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>('bookChapters/deleteChapter', async (chapterId: string, thunkApi) => {
+  thunkApi.dispatch(setDeletingState('start'));
+  const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
+  try {
+    await deleteChapter_DB(bookId, chapterId);
+    thunkApi.dispatch(fetchBookDetail(bookId));
+  } catch (error) {
+    thunkApi.dispatch(setDeletingState('failed'));
+  }
+});
 //#endregion Thunks
 
-export { fetchBookDetail, createNewChapter };
+export { fetchBookDetail, createNewChapter, deleteChapter };

@@ -9,7 +9,11 @@ import {
 } from './bookChapters.slice';
 import bookChaptersSlice from './bookChapters.slice';
 
-import { fetchBookDetail, createNewChapter } from './bookChapters.middleware';
+import {
+  fetchBookDetail,
+  createNewChapter,
+  deleteChapter,
+} from './bookChapters.middleware';
 
 //#region  interfaces
 export type { IBookChapters, IBookChaptersState };
@@ -24,7 +28,7 @@ export { setLoadedOnce, setSavingState, setDeletingState };
 //#endregion actions
 
 //#region middleware
-export { fetchBookDetail, createNewChapter };
+export { fetchBookDetail, createNewChapter, deleteChapter };
 //#endregion middleware
 
 //#region slice

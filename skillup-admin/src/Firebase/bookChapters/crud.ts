@@ -47,4 +47,25 @@ const createNewChapter_DB = async (
 
 //#endregion Create
 
-export { getBookDetail_DB, createNewChapter_DB };
+//#region Delete
+const deleteChapter_DB = async (bookId: string, chapterId: string) => {
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    const bookRef = booksRef.doc(bookId);
+    let { chapters: chaptersArrInDB } = (
+      await txn.get(bookRef)
+    ).data() as IBookChapters;
+
+    const chapterRef = booksRef
+      .doc(bookId)
+      .collection(BookChaptersCollections.CHAPTERS)
+      .doc(chapterId);
+    txn.delete(chapterRef);
+
+    chaptersArrInDB = chaptersArrInDB.filter(
+      (chapter) => chapter.id !== chapterId,
+    );
+    txn.update(bookRef, { chapters: chaptersArrInDB });
+  });
+};
+//#endregion Delete
+export { getBookDetail_DB, createNewChapter_DB, deleteChapter_DB };

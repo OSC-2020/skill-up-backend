@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchBookDetail } from '../../../redux/slices/bookChapters';
+import { deleteChapter, fetchBookDetail } from '../../../redux/slices/bookChapters';
 import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
@@ -8,24 +8,6 @@ import BookChaptersSideNav from "./BookDetailSideNav";
 import ChapterTile from "./ChapterTile";
 import { CreateChapterInput } from "./CreateChapterInput";
 
-function deleteChapterFromList(id: number | string) {
-  console.log(
-    "🚀 ~ file: BookDetail.tsx ~ line 9 ~ deleteChapterFromList ~ id",
-    id
-  );
-}
-function moveChapterUpInList(id: number | string) {
-  console.log(
-    "🚀 ~ file: BookDetail.tsx ~ line 13 ~ moveChapterUpInList ~ id",
-    id
-  );
-}
-function moveChapterDownInList(id: number | string) {
-  console.log(
-    "🚀 ~ file: BookDetail.tsx ~ line 17 ~ moveChapterDownInList ~ id",
-    id
-  );
-}
 
 
 export const BookChapters = ({ match }: any) => {
@@ -37,6 +19,24 @@ export const BookChapters = ({ match }: any) => {
     dispatch(fetchBookDetail(bookId));
   }
   const bookInfo = bookDetailSlice.bookInfo;
+
+  const deleteChapterFromList = (id: string) => {
+    dispatch(deleteChapter(id));
+  };
+  const moveChapterUpInList = (id: string) => {
+    console.log(
+      "🚀 ~ file: BookDetail.tsx ~ line 13 ~ moveChapterUpInList ~ id",
+      id
+    );
+  };
+  const moveChapterDownInList = (id: string) => {
+    console.log(
+      "🚀 ~ file: BookDetail.tsx ~ line 17 ~ moveChapterDownInList ~ id",
+      id
+    );
+  };
+
+
   return (
     <main className="flex py-5 w-full">
       <BookChaptersSideNav />

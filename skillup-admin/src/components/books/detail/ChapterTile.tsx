@@ -6,9 +6,9 @@ interface Props {
   id: string;
   title: string;
   index: number;
-  onDelete: (id: string | number) => void;
-  onMoveUp: (id: string | number) => void;
-  onMoveDown: (id: string | number) => void;
+  onDelete: (id: string) => void;
+  onMoveUp: (id: string) => void;
+  onMoveDown: (id: string) => void;
 }
 
 interface State {

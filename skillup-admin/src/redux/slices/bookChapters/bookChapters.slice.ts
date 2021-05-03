@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
-import { createNewChapter, fetchBookDetail } from './bookChapters.middleware';
+import {
+  createNewChapter,
+  deleteChapter,
+  fetchBookDetail,
+} from './bookChapters.middleware';
 
 interface IBookChapters {
   id: string;
@@ -61,6 +65,9 @@ export const bookChaptersSlice = createSlice({
     );
     builder.addCase(createNewChapter.fulfilled, (state, action) => {
       state.savingState = 'done';
+    });
+    builder.addCase(deleteChapter.fulfilled, (state, action) => {
+      state.deletingState = 'done';
     });
   },
 });
