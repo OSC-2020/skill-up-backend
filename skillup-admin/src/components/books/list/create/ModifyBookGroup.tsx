@@ -4,8 +4,7 @@ import { useParams } from "react-router-dom";
 import { getBookGroupWithId_DB } from "../../../../Firebase/bookGroups/crud";
 import DBError from "../../../../Firebase/DBError";
 import { useAppDispatch } from "../../../../redux/hooks";
-import { modifyBookGroup } from "../../../../redux/slices/bookGroups/bookGroups.middleware";
-import { IBookGroups } from "../../../../redux/slices/bookGroups/bookGroups.slice";
+import { IBookGroups, modifyBookGroup } from "../../../../redux/slices/bookGroups";
 import { EditableBookGroupTile } from "./EditableBookTitle";
 
 interface Props {
@@ -13,7 +12,7 @@ interface Props {
 }
 
 export const ModifyBookGroup = (props: Props) => {
-  const { groupId } = useParams() as { groupId: string };
+  const { groupId } = useParams() as { groupId: string; };
   const dispatch = useAppDispatch();
   const [groupInfo, setgroupInfo] = useState<IBookGroups | null>(null);
   const [loading, setLoading] = useState(true);

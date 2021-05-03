@@ -1,6 +1,6 @@
 import { Field } from "formik";
 import React from "react";
-import { IBooks } from "../../../../redux/slices/bookGroups/bookGroups.slice";
+import { IBooks } from "../../../../redux/slices/bookGroups";
 
 interface EditableBookTileProps {
   book: IBooks;

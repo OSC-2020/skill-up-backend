@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { IChapterInfoModel } from '../chapterDetail/chapterDetail';
-import { fetchBookDetail } from './bookChapters.middleware';
+import { IChapterInfo } from '../chapterDetail/chapterDetail';
+import { createNewChapter, fetchBookDetail } from './bookChapters.middleware';
 
 interface IBookChapters {
   id: string;
   title: string;
   totalChapters: number;
   completedByCount: number;
-  chapters: IChapterInfoModel[];
+  chapters: IChapterInfo[];
 }
 
 //#region Declarations
@@ -59,6 +59,9 @@ export const bookChaptersSlice = createSlice({
         state.bookInfo = action.payload;
       },
     );
+    builder.addCase(createNewChapter.fulfilled, (state, action) => {
+      state.savingState = '';
+    });
   },
 });
 //#endregion Reducer
@@ -83,7 +86,6 @@ export type { IBookChapters, IBookChaptersState };
 
 // WARNING: Don't know why or how this works, but we need to re-export in next line to make it work
 // you can not import it from middleware, insted it has to be imported from slice
-export { fetchBookDetail };
 export { selectSavingState, selectDeletingState };
 export default bookChaptersSlice.reducer;
 //#endregion exports

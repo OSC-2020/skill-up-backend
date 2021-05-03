@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchAllBookGroups } from "../../../redux/slices/bookGroups/bookGroups.slice";
+import { fetchAllBookGroups } from "../../../redux/slices/bookGroups";
 import { BookListTile } from "./BookListTile";
 
 export default function BooksList() {

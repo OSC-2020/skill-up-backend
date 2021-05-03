@@ -1,13 +1,13 @@
-import { firebaseInstance } from "..";
-import { IBookGroups } from "../../redux/slices/bookGroups/bookGroups.slice";
-import RootCollections from "../CollectionNames";
-import DBError from "../DBError";
+import { firebaseInstance } from '..';
+import { IBookGroups } from '../../redux/slices/bookGroups';
+import RootCollections from '../CollectionNames';
+import DBError from '../DBError';
 
 const bookGroupsRef = firebaseInstance.firestore.collection(
-  `/${RootCollections.BOOK_GROUPS}`
+  `/${RootCollections.BOOK_GROUPS}`,
 );
 const booksRef = firebaseInstance.firestore.collection(
-  `/${RootCollections.BOOKS}`
+  `/${RootCollections.BOOKS}`,
 );
 
 //#region Create

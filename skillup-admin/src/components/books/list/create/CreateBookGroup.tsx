@@ -2,12 +2,12 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { saveNewBookGroup } from "../../../../redux/slices/bookGroups/bookGroups.middleware";
 import {
+  saveNewBookGroup,
   IBookGroups,
   IBooks,
   selectSavingState,
-} from "../../../../redux/slices/bookGroups/bookGroups.slice";
+} from "../../../../redux/slices/bookGroups";
 import { arrayOfSize } from "../../../../utilities/array";
 import { EditableBookGroupTile } from "./EditableBookTitle";
 

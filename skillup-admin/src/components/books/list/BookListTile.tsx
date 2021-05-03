@@ -5,8 +5,8 @@ import {
   deleteBookGroup,
   publishBookGroup,
   unpublishBookGroup,
-} from "../../../redux/slices/bookGroups/bookGroups.middleware";
-import { IBooks } from "../../../redux/slices/bookGroups/bookGroups.slice";
+  IBooks
+} from "../../../redux/slices/bookGroups";
 
 interface BookTileProps extends IBooks {
   sub?: string;
