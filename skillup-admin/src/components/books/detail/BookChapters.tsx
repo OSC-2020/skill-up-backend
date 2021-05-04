@@ -42,7 +42,7 @@ export const BookChapters = ({ match }: any) => {
 
   return (
     <main className="flex py-5 w-full">
-      <BookChaptersSideNav />
+      <BookChaptersSideNav title={bookInfo?.title as string} totalChapters={bookInfo?.totalChapters as number} />
       <section className="w-full ml-5 px-5 flex flex-col items-center">
         <section className="w-72 pb-4 pt-2">
           <CreateChapterInput saving={bookDetailSlice.saving} />

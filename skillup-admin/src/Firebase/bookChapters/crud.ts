@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 import { firebaseInstance } from '..';
 import { IBookChapters } from '../../redux/slices/bookChapters';
 import {
@@ -40,8 +41,11 @@ const createNewChapter_DB = async (
     };
     txn.set(newChapterRef, chapterData);
 
-    chaptersArrInDB.push(chapterInfo);
-    txn.update(bookRef, { chapters: chaptersArrInDB });
+    chaptersArrInDB.push(chapterData);
+    txn.update(bookRef, {
+      chapters: chaptersArrInDB,
+      totalChapters: firebase.firestore.FieldValue.increment(1),
+    });
   });
 };
 
@@ -60,11 +64,13 @@ const deleteChapter_DB = async (bookId: string, chapterId: string) => {
       .collection(BookChaptersCollections.CHAPTERS)
       .doc(chapterId);
     txn.delete(chapterRef);
-
     chaptersArrInDB = chaptersArrInDB.filter(
       (chapter) => chapter.id !== chapterId,
     );
-    txn.update(bookRef, { chapters: chaptersArrInDB });
+    txn.update(bookRef, {
+      chapters: chaptersArrInDB,
+      totalChapters: firebase.firestore.FieldValue.increment(-1),
+    });
   });
 };
 //#endregion Delete
