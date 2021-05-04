@@ -13,6 +13,7 @@ import {
   fetchBookDetail,
   createNewChapter,
   deleteChapter,
+  updateChapterTitle_MW,
 } from './bookChapters.middleware';
 
 //#region  interfaces
@@ -28,7 +29,12 @@ export { setLoadedOnce, setSavingState, setDeletingState };
 //#endregion actions
 
 //#region middleware
-export { fetchBookDetail, createNewChapter, deleteChapter };
+export {
+  fetchBookDetail,
+  createNewChapter,
+  deleteChapter,
+  updateChapterTitle_MW,
+};
 //#endregion middleware
 
 //#region slice

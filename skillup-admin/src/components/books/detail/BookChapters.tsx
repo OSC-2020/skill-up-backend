@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { deleteChapter, fetchBookDetail } from '../../../redux/slices/bookChapters';
+import { deleteChapter, fetchBookDetail, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
 import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
@@ -20,9 +20,13 @@ export const BookChapters = ({ match }: any) => {
   }
   const bookInfo = bookDetailSlice.bookInfo;
 
-  const deleteChapterFromList = (id: string) => {
-    dispatch(deleteChapter(id));
+  const deleteChapterFromList = (chapterId: string) => {
+    dispatch(deleteChapter(chapterId));
   };
+  const updateChapterTitle = (chapterId: string, title: string) => {
+    dispatch(updateChapterTitle_MW({ chapterId, title }));
+  };
+
   const moveChapterUpInList = (id: string) => {
     console.log(
       "🚀 ~ file: BookDetail.tsx ~ line 13 ~ moveChapterUpInList ~ id",
@@ -56,6 +60,7 @@ export const BookChapters = ({ match }: any) => {
                     id={chapter.id as string}
                     title={chapter.title}
                     index={index}
+                    onUpdateTitle={updateChapterTitle}
                     onDelete={deleteChapterFromList}
                     onMoveUp={moveChapterUpInList}
                     onMoveDown={moveChapterDownInList}

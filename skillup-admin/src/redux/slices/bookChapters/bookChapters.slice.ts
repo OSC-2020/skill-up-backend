@@ -5,6 +5,7 @@ import {
   createNewChapter,
   deleteChapter,
   fetchBookDetail,
+  updateChapterTitle_MW,
 } from './bookChapters.middleware';
 
 interface IBookChapters {
@@ -68,6 +69,9 @@ export const bookChaptersSlice = createSlice({
     });
     builder.addCase(deleteChapter.fulfilled, (state, action) => {
       state.deletingState = 'done';
+    });
+    builder.addCase(updateChapterTitle_MW.fulfilled, (state, action) => {
+      state.savingState = 'done';
     });
   },
 });

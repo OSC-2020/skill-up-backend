@@ -7,6 +7,7 @@ interface Props {
   title: string;
   index: number;
   onDelete: (id: string) => void;
+  onUpdateTitle: (chapterId: string, title: string) => void;
   onMoveUp: (id: string) => void;
   onMoveDown: (id: string) => void;
 }
@@ -18,7 +19,7 @@ interface State {
 export default class ChapterTile extends Component<Props, State> {
   state = { currentlyEditing: false };
   view: any;
-  input: HTMLTextAreaElement | undefined;
+  editTitleInput: HTMLTextAreaElement | undefined;
 
   getHorizMargin = (index: number) => {
     const pos = index % 4;
@@ -32,28 +33,28 @@ export default class ChapterTile extends Component<Props, State> {
 
   editStart(e: React.MouseEvent) {
     this.view = e.currentTarget;
-    this.input = document.createElement("textarea");
-    this.input.className = "p-1 border-2 border-gray-100";
-    this.input.value = e.currentTarget.innerHTML;
+    this.editTitleInput = document.createElement("textarea");
+    this.editTitleInput.className = "p-1 border-2 border-gray-100";
+    this.editTitleInput.value = e.currentTarget.innerHTML;
 
-    this.input.onkeydown = (event: KeyboardEvent) => {
+    this.editTitleInput.onkeydown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
-        this.input?.blur();
+        this.editTitleInput?.blur();
       }
     };
 
-    this.input.onblur = () => {
+    this.editTitleInput.onblur = () => {
       this.editEnd();
     };
 
-    this.view.replaceWith(this.input);
-    this.input.focus();
+    this.view.replaceWith(this.editTitleInput);
+    this.editTitleInput.focus();
   }
 
   editEnd() {
     // TODO: Save data to DB and store here
-    this.view.innerHTML = this.input?.value;
-    this.input?.replaceWith(this.view);
+    this.props.onUpdateTitle(this.props.id, this.editTitleInput?.value as string);
+    this.editTitleInput?.replaceWith(this.view);
   }
 
   render() {

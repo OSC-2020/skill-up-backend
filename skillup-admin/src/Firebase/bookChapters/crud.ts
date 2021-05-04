@@ -68,4 +68,37 @@ const deleteChapter_DB = async (bookId: string, chapterId: string) => {
   });
 };
 //#endregion Delete
-export { getBookDetail_DB, createNewChapter_DB, deleteChapter_DB };
+
+//#region Update
+const updateChapterTitle_DB = async (
+  bookId: string,
+  chapterId: string,
+  newTitle: string,
+) => {
+  const bookDoc = booksRef.doc(bookId);
+  const chapterDoc = bookDoc
+    .collection(BookChaptersCollections.CHAPTERS)
+    .doc(chapterId);
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    let { chapters: chaptersArrInDB } = (
+      await txn.get(bookDoc)
+    ).data() as IBookChapters;
+
+    txn.update(chapterDoc, { title: newTitle });
+    const chapterInfo = chaptersArrInDB.find(
+      (chapter) => chapter.id === chapterId,
+    );
+    if (chapterInfo) {
+      chapterInfo.title = newTitle;
+      txn.update(bookDoc, { chapters: chaptersArrInDB });
+    }
+  });
+};
+//#endregion Update
+
+export {
+  getBookDetail_DB,
+  createNewChapter_DB,
+  deleteChapter_DB,
+  updateChapterTitle_DB,
+};
