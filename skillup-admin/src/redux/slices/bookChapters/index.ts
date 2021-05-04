@@ -3,9 +3,9 @@ import {
   IBookChaptersState,
   selectSavingState,
   selectDeletingState,
-  setLoadedOnce,
-  setSavingState,
-  setDeletingState,
+  bcSetLoadedOnce_AN,
+  bcSetSavingState_AN,
+  bcSetDeletingState_AN,
 } from './bookChapters.slice';
 import bookChaptersSlice from './bookChapters.slice';
 
@@ -25,7 +25,7 @@ export { selectSavingState, selectDeletingState };
 //#endregion selectors
 
 //#region actions
-export { setLoadedOnce, setSavingState, setDeletingState };
+export { bcSetLoadedOnce_AN, bcSetSavingState_AN, bcSetDeletingState_AN };
 //#endregion actions
 
 //#region middleware

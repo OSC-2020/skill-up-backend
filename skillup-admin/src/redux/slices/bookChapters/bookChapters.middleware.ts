@@ -9,16 +9,16 @@ import { AppDispatch, RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {
   IBookChapters,
-  setDeletingState,
-  setLoadedOnce,
-  setSavingState,
+  bcSetDeletingState_AN,
+  bcSetLoadedOnce_AN,
+  bcSetSavingState_AN,
 } from './bookChapters.slice';
 
 //#region Thunks
 const fetchBookDetail_MW = createAsyncThunk(
   'bookChapters/fetchBookDetail',
   async (bookId: string, thunkAPI): Promise<IBookChapters> => {
-    thunkAPI.dispatch(setLoadedOnce(true));
+    thunkAPI.dispatch(bcSetLoadedOnce_AN(true));
     return (await getBookDetail_DB(bookId)) as IBookChapters;
   },
 );
@@ -34,14 +34,14 @@ const createNewChapter_MW = createAsyncThunk<
     state: RootState;
   }
 >('bookChapters/createChapter', async (chapterInfo: IChapterInfo, thunkApi) => {
-  thunkApi.dispatch(setSavingState('start'));
+  thunkApi.dispatch(bcSetSavingState_AN('start'));
   const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
   try {
     await createNewChapter_DB(bookId, chapterInfo);
     thunkApi.dispatch(fetchBookDetail_MW(bookId));
   } catch (error) {
     console.log('🚀 ~ error', error);
-    thunkApi.dispatch(setSavingState('failed'));
+    thunkApi.dispatch(bcSetSavingState_AN('failed'));
   }
 });
 
@@ -53,13 +53,13 @@ const deleteChapter_MW = createAsyncThunk<
     state: RootState;
   }
 >('bookChapters/deleteChapter', async (chapterId: string, thunkApi) => {
-  thunkApi.dispatch(setDeletingState('start'));
+  thunkApi.dispatch(bcSetDeletingState_AN('start'));
   const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
   try {
     await deleteChapter_DB(bookId, chapterId);
     thunkApi.dispatch(fetchBookDetail_MW(bookId));
   } catch (error) {
-    thunkApi.dispatch(setDeletingState('failed'));
+    thunkApi.dispatch(bcSetDeletingState_AN('failed'));
   }
 });
 
@@ -73,13 +73,13 @@ const updateChapterTitle_MW = createAsyncThunk<
 >(
   'bookChapters/updateTitle',
   async (data: { chapterId: string; title: string }, thunkApi) => {
-    thunkApi.dispatch(setSavingState('start'));
+    thunkApi.dispatch(bcSetSavingState_AN('start'));
     const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
     try {
       await updateChapterTitle_DB(bookId, data.chapterId, data.title);
       thunkApi.dispatch(fetchBookDetail_MW(bookId));
     } catch (error) {
-      thunkApi.dispatch(setSavingState('failed'));
+      thunkApi.dispatch(bcSetSavingState_AN('failed'));
     }
   },
 );

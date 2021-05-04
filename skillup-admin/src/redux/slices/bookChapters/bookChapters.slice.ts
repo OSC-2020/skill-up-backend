@@ -41,16 +41,16 @@ export const bookChaptersSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setLoadedOnce(state, action: PayloadAction<boolean>) {
+    bcSetLoadedOnce_AN(state, action: PayloadAction<boolean>) {
       state.loadedOnce = action.payload;
     },
-    setSavingState(
+    bcSetSavingState_AN(
       state,
       action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
     ) {
       state.savingState = action.payload;
     },
-    setDeletingState(
+    bcSetDeletingState_AN(
       state,
       action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
     ) {
@@ -88,9 +88,9 @@ const selectDeletingState = (state: RootState) =>
 
 //#region exports
 export const {
-  setLoadedOnce,
-  setSavingState,
-  setDeletingState,
+  bcSetLoadedOnce_AN,
+  bcSetSavingState_AN,
+  bcSetDeletingState_AN,
 } = bookChaptersSlice.actions;
 
 export type { IBookChapters, IBookChaptersState };

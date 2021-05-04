@@ -8,16 +8,16 @@ import {
 } from '../../../Firebase/bookGroups/crud';
 import {
   IBookGroups,
-  setDeletingState,
-  setLoadedOnce,
-  setSavingState,
+  bgSetDeletingState_AN,
+  bgSetLoadedOnce_AN,
+  bgSetSavingState_AN,
 } from './bookGroups.slice';
 
 //#region Thunks
 const fetchAllBookGroups_MW = createAsyncThunk(
   'bookGroups/fetchAll',
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(setLoadedOnce(true));
+    thunkAPI.dispatch(bgSetLoadedOnce_AN(true));
     const booksDocs = await getAllBooks_DB();
     const books: any = [];
     booksDocs.docs.forEach((doc) => {
@@ -32,26 +32,26 @@ const fetchAllBookGroups_MW = createAsyncThunk(
 const saveNewBookGroup_MW = createAsyncThunk(
   'bookGroups/create',
   async (group: IBookGroups, thunkApi) => {
-    thunkApi.dispatch(setSavingState('start'));
+    thunkApi.dispatch(bgSetSavingState_AN('start'));
     try {
       await saveBooksGroup_DB(group);
-      thunkApi.dispatch(setSavingState('done'));
+      thunkApi.dispatch(bgSetSavingState_AN('done'));
       thunkApi.dispatch(fetchAllBookGroups_MW());
     } catch (error) {
-      thunkApi.dispatch(setSavingState('failed'));
+      thunkApi.dispatch(bgSetSavingState_AN('failed'));
     }
   },
 );
 const modifyBookGroup_MW = createAsyncThunk(
   'bookGroups/modify',
   async (group: IBookGroups, thunkApi) => {
-    thunkApi.dispatch(setSavingState('start'));
+    thunkApi.dispatch(bgSetSavingState_AN('start'));
     try {
       await modifyBooksGroup_DB(group);
-      thunkApi.dispatch(setSavingState('done'));
+      thunkApi.dispatch(bgSetSavingState_AN('done'));
       thunkApi.dispatch(fetchAllBookGroups_MW());
     } catch (error) {
-      thunkApi.dispatch(setSavingState('failed'));
+      thunkApi.dispatch(bgSetSavingState_AN('failed'));
     }
   },
 );
@@ -59,13 +59,13 @@ const modifyBookGroup_MW = createAsyncThunk(
 const deleteBookGroup_MW = createAsyncThunk(
   'bookGroups/delete',
   async (groupId: string, thunkApi) => {
-    thunkApi.dispatch(setDeletingState('start'));
+    thunkApi.dispatch(bgSetDeletingState_AN('start'));
     try {
       await deleteBookGroup_DB(groupId);
-      thunkApi.dispatch(setDeletingState('done'));
+      thunkApi.dispatch(bgSetDeletingState_AN('done'));
       thunkApi.dispatch(fetchAllBookGroups_MW());
     } catch (error) {
-      thunkApi.dispatch(setDeletingState('failed'));
+      thunkApi.dispatch(bgSetDeletingState_AN('failed'));
     }
   },
 );
@@ -76,12 +76,12 @@ const changePublishState = async (
   publish: boolean,
   thunkApi: any,
 ) => {
-  thunkApi.dispatch(setSavingState('start'));
+  thunkApi.dispatch(bgSetSavingState_AN('start'));
   try {
     await publishBookGroup_DB(groupId, publish);
-    thunkApi.dispatch(setSavingState('done'));
+    thunkApi.dispatch(bgSetSavingState_AN('done'));
   } catch (error) {
-    thunkApi.dispatch(setSavingState('failed'));
+    thunkApi.dispatch(bgSetSavingState_AN('failed'));
   }
   return groupId;
 };

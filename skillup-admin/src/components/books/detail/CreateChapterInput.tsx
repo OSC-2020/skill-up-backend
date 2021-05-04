@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from "../../../redux/hooks";
-import { createNewChapter_MW, setSavingState } from '../../../redux/slices/bookChapters';
+import { createNewChapter_MW, bcSetSavingState_AN } from '../../../redux/slices/bookChapters';
 
 interface Props {
     savingState: '' | 'start' | 'done' | 'failed';
@@ -13,7 +13,7 @@ export const CreateChapterInput = (props: Props) => {
     useEffect(() => {
         if (props.savingState === "done") {
             setNewChapterInput("");
-            dispatch(setSavingState(''));
+            dispatch(bcSetSavingState_AN(''));
         }
     }, [props.savingState, dispatch, setNewChapterInput]);
     const handleKeyDownOnInput = (e: any) => {

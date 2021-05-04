@@ -47,16 +47,16 @@ export const bookGroupsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setLoadedOnce(state, action: PayloadAction<boolean>) {
+    bgSetLoadedOnce_AN(state, action: PayloadAction<boolean>) {
       state.loadedOnce = action.payload;
     },
-    setSavingState(
+    bgSetSavingState_AN(
       state,
       action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
     ) {
       state.savingState = action.payload;
     },
-    setDeletingState(
+    bgSetDeletingState_AN(
       state,
       action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
     ) {
@@ -112,9 +112,9 @@ const selectBookGroupWithId = (groupId: string) => (state: RootState) =>
 
 //#region exports
 export const {
-  setLoadedOnce,
-  setSavingState,
-  setDeletingState,
+  bgSetLoadedOnce_AN,
+  bgSetSavingState_AN,
+  bgSetDeletingState_AN,
 } = bookGroupsSlice.actions;
 
 export type { IBooks, IBookGroups, IBookGoupsState };
