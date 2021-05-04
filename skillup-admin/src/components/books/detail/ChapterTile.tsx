@@ -8,8 +8,8 @@ interface Props {
   index: number;
   onDelete: (id: string) => void;
   onUpdateTitle: (chapterId: string, title: string) => void;
-  onMoveUp: (id: string) => void;
-  onMoveDown: (id: string) => void;
+  onMoveUp: (idx: number) => void;
+  onMoveDown: (idx: number) => void;
 }
 
 interface State {
@@ -82,11 +82,11 @@ export default class ChapterTile extends Component<Props, State> {
             <span className="flex flex-col items-center w-1/3">
               <FaArrowUp
                 className="cursor-pointer text-base"
-                onClick={() => this.props.onMoveUp(this.props.id)}
+                onClick={() => this.props.onMoveUp(this.props.index)}
               />
               <FaArrowDown
                 className="cursor-pointer text-base"
-                onClick={() => this.props.onMoveDown(this.props.id)}
+                onClick={() => this.props.onMoveDown(this.props.index)}
               />
             </span>
           </section>

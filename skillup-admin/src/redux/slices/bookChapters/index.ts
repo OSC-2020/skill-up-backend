@@ -6,6 +6,8 @@ import {
   bcSetLoadedOnce_AN,
   bcSetSavingState_AN,
   bcSetDeletingState_AN,
+  bcMoveChapterUpInList_AN,
+  bcMoveChapterDownInList_AN,
 } from './bookChapters.slice';
 import bookChaptersSlice from './bookChapters.slice';
 
@@ -14,6 +16,7 @@ import {
   createNewChapter_MW,
   deleteChapter_MW,
   updateChapterTitle_MW,
+  updateChapterOrder_MW,
 } from './bookChapters.middleware';
 
 //#region  interfaces
@@ -25,7 +28,13 @@ export { selectSavingState, selectDeletingState };
 //#endregion selectors
 
 //#region actions
-export { bcSetLoadedOnce_AN, bcSetSavingState_AN, bcSetDeletingState_AN };
+export {
+  bcSetLoadedOnce_AN,
+  bcSetSavingState_AN,
+  bcSetDeletingState_AN,
+  bcMoveChapterUpInList_AN,
+  bcMoveChapterDownInList_AN,
+};
 //#endregion actions
 
 //#region middleware
@@ -34,6 +43,7 @@ export {
   createNewChapter_MW,
   deleteChapter_MW,
   updateChapterTitle_MW,
+  updateChapterOrder_MW,
 };
 //#endregion middleware
 

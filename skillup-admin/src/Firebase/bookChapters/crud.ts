@@ -94,6 +94,13 @@ const updateChapterTitle_DB = async (
     }
   });
 };
+
+const updateChapterOrder_DB = async (
+  bookId: string,
+  chapters: IChapterInfo[],
+) => {
+  return await booksRef.doc(bookId).update({ chapters });
+};
 //#endregion Update
 
 export {
@@ -101,4 +108,5 @@ export {
   createNewChapter_DB,
   deleteChapter_DB,
   updateChapterTitle_DB,
+  updateChapterOrder_DB,
 };

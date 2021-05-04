@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from "../../../redux/hooks";
 import { createNewChapter_MW, bcSetSavingState_AN } from '../../../redux/slices/bookChapters';
+import { flagStatus } from '../../../redux/store';
 
 interface Props {
-    savingState: '' | 'start' | 'done' | 'failed';
+    saving: flagStatus;
 }
 
 export const CreateChapterInput = (props: Props) => {
@@ -11,11 +12,11 @@ export const CreateChapterInput = (props: Props) => {
     const [newChapterInput, setNewChapterInput] = useState("");
 
     useEffect(() => {
-        if (props.savingState === "done") {
+        if (props.saving === "done") {
             setNewChapterInput("");
             dispatch(bcSetSavingState_AN(''));
         }
-    }, [props.savingState, dispatch, setNewChapterInput]);
+    }, [props.saving, dispatch, setNewChapterInput]);
     const handleKeyDownOnInput = (e: any) => {
         const val = e.target.value;
         const isValidValue = val && val.trim() !== '';

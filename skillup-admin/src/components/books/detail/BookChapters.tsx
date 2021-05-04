@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { deleteChapter_MW, fetchBookDetail_MW, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
+import { bcMoveChapterDownInList_AN, bcMoveChapterUpInList_AN, deleteChapter_MW, fetchBookDetail_MW, updateChapterOrder_MW, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
 import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
@@ -14,11 +14,12 @@ export const BookChapters = ({ match }: any) => {
   const dispatch = useAppDispatch();
   const bookDetailSlice = useAppSelector((state) => state.currentBookDetail);
   const bookId = match.params.bookId;
+  const bookInfo = bookDetailSlice.bookInfo;
+  const isChapterOrderModified = bookDetailSlice.isChapterOrderModified;
 
   if (!bookDetailSlice.loadedOnce) {
     dispatch(fetchBookDetail_MW(bookId));
   }
-  const bookInfo = bookDetailSlice.bookInfo;
 
   const deleteChapterFromList = (chapterId: string) => {
     dispatch(deleteChapter_MW(chapterId));
@@ -27,26 +28,24 @@ export const BookChapters = ({ match }: any) => {
     dispatch(updateChapterTitle_MW({ chapterId, title }));
   };
 
-  const moveChapterUpInList = (id: string) => {
-    console.log(
-      "🚀 ~ file: BookDetail.tsx ~ line 13 ~ moveChapterUpInList ~ id",
-      id
-    );
-  };
-  const moveChapterDownInList = (id: string) => {
-    console.log(
-      "🚀 ~ file: BookDetail.tsx ~ line 17 ~ moveChapterDownInList ~ id",
-      id
-    );
+  const moveChapterUpInList = (idx: number) => {
+    dispatch(bcMoveChapterUpInList_AN(idx));
   };
 
+  const moveChapterDownInList = (idx: number) => {
+    dispatch(bcMoveChapterDownInList_AN(idx));
+  };
+
+  const saveChapterOrder = () => {
+    dispatch(updateChapterOrder_MW());
+  };
 
   return (
     <main className="flex py-5 w-full">
       <BookChaptersSideNav />
       <section className="w-full ml-5 px-5 flex flex-col items-center">
         <section className="w-72 pb-4 pt-2">
-          <CreateChapterInput savingState={bookDetailSlice.savingState} />
+          <CreateChapterInput saving={bookDetailSlice.saving} />
         </section>
         <MobileLayout>
           <ScrollToBottom
@@ -72,6 +71,9 @@ export const BookChapters = ({ match }: any) => {
           </ScrollToBottom>
         </MobileLayout>
       </section>
+      {isChapterOrderModified ?
+        <button className="skillup-btn-success fixed right-8 bottom-8" onClick={saveChapterOrder}>Save chapter order</button> : null
+      }
     </main>
   );
 };

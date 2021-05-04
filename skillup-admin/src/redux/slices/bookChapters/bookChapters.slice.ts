@@ -1,13 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { moveAnElementInArray } from '../../../utilities/array';
+import { flagStatus, RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {
   createNewChapter_MW,
   deleteChapter_MW,
   fetchBookDetail_MW,
+  updateChapterOrder_MW,
   updateChapterTitle_MW,
 } from './bookChapters.middleware';
 
+interface IFlags {
+  loading: flagStatus;
+  saving: flagStatus;
+  deleting: flagStatus;
+  updating: flagStatus;
+}
 interface IBookChapters {
   id: string;
   title: string;
@@ -18,20 +26,20 @@ interface IBookChapters {
 
 //#region Declarations
 
-interface IBookChaptersState {
-  loading: 'idle' | 'pending';
+interface IBookChaptersState extends IFlags {
   bookInfo: IBookChapters | null;
   loadedOnce: boolean;
-  savingState: '' | 'start' | 'done' | 'failed';
-  deletingState: '' | 'start' | 'done' | 'failed';
+  isChapterOrderModified: boolean;
 }
 
 const initialState: IBookChaptersState = {
-  loading: 'idle',
   loadedOnce: false,
   bookInfo: null,
-  savingState: '',
-  deletingState: '',
+  saving: '',
+  deleting: '',
+  updating: '',
+  loading: '',
+  isChapterOrderModified: false,
 };
 //#endregion Declarations
 
@@ -44,17 +52,27 @@ export const bookChaptersSlice = createSlice({
     bcSetLoadedOnce_AN(state, action: PayloadAction<boolean>) {
       state.loadedOnce = action.payload;
     },
-    bcSetSavingState_AN(
-      state,
-      action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
-    ) {
-      state.savingState = action.payload;
+    bcSetSavingState_AN(state, action: PayloadAction<flagStatus>) {
+      state.saving = action.payload;
     },
-    bcSetDeletingState_AN(
-      state,
-      action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
-    ) {
-      state.deletingState = action.payload;
+    bcSetDeletingState_AN(state, action: PayloadAction<flagStatus>) {
+      state.deleting = action.payload;
+    },
+    bcMoveChapterUpInList_AN(state, action: PayloadAction<number>) {
+      state.isChapterOrderModified = true;
+      moveAnElementInArray(
+        state.bookInfo?.chapters as IChapterInfo[],
+        action.payload,
+        action.payload + 1,
+      );
+    },
+    bcMoveChapterDownInList_AN(state, action: PayloadAction<number>) {
+      state.isChapterOrderModified = true;
+      moveAnElementInArray(
+        state.bookInfo?.chapters as IChapterInfo[],
+        action.payload,
+        action.payload - 1,
+      );
     },
   },
   extraReducers: (builder) => {
@@ -65,13 +83,16 @@ export const bookChaptersSlice = createSlice({
       },
     );
     builder.addCase(createNewChapter_MW.fulfilled, (state, action) => {
-      state.savingState = 'done';
+      state.saving = 'done';
     });
     builder.addCase(deleteChapter_MW.fulfilled, (state, action) => {
-      state.deletingState = 'done';
+      state.deleting = 'done';
     });
     builder.addCase(updateChapterTitle_MW.fulfilled, (state, action) => {
-      state.savingState = 'done';
+      state.saving = 'done';
+    });
+    builder.addCase(updateChapterOrder_MW.fulfilled, (state, action) => {
+      state.isChapterOrderModified = false;
     });
   },
 });
@@ -79,10 +100,9 @@ export const bookChaptersSlice = createSlice({
 
 //#region Selectors
 
-const selectSavingState = (state: RootState) =>
-  state.currentBookDetail.savingState;
+const selectSavingState = (state: RootState) => state.currentBookDetail.saving;
 const selectDeletingState = (state: RootState) =>
-  state.currentBookDetail.deletingState;
+  state.currentBookDetail.deleting;
 
 //#endregion Selectors
 
@@ -91,6 +111,8 @@ export const {
   bcSetLoadedOnce_AN,
   bcSetSavingState_AN,
   bcSetDeletingState_AN,
+  bcMoveChapterUpInList_AN,
+  bcMoveChapterDownInList_AN,
 } = bookChaptersSlice.actions;
 
 export type { IBookChapters, IBookChaptersState };
