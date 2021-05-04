@@ -1,21 +1,21 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   deleteBookGroup_DB,
   getAllBooks_DB,
   modifyBooksGroup_DB,
   publishBookGroup_DB,
   saveBooksGroup_DB,
-} from "../../../Firebase/bookGroups/crud";
+} from '../../../Firebase/bookGroups/crud';
 import {
   IBookGroups,
   setDeletingState,
   setLoadedOnce,
   setSavingState,
-} from "./bookGroups.slice";
+} from './bookGroups.slice';
 
 //#region Thunks
-const fetchAllBookGroups = createAsyncThunk(
-  "bookGroups/fetchAll",
+const fetchAllBookGroups_MW = createAsyncThunk(
+  'bookGroups/fetchAll',
   async (_, thunkAPI) => {
     thunkAPI.dispatch(setLoadedOnce(true));
     const booksDocs = await getAllBooks_DB();
@@ -26,84 +26,84 @@ const fetchAllBookGroups = createAsyncThunk(
       books.push(group);
     });
     return books;
-  }
+  },
 );
 
-const saveNewBookGroup = createAsyncThunk(
-  "bookGroups/create",
+const saveNewBookGroup_MW = createAsyncThunk(
+  'bookGroups/create',
   async (group: IBookGroups, thunkApi) => {
-    thunkApi.dispatch(setSavingState("start"));
+    thunkApi.dispatch(setSavingState('start'));
     try {
       await saveBooksGroup_DB(group);
-      thunkApi.dispatch(setSavingState("done"));
-      thunkApi.dispatch(fetchAllBookGroups());
+      thunkApi.dispatch(setSavingState('done'));
+      thunkApi.dispatch(fetchAllBookGroups_MW());
     } catch (error) {
-      thunkApi.dispatch(setSavingState("failed"));
+      thunkApi.dispatch(setSavingState('failed'));
     }
-  }
+  },
 );
-const modifyBookGroup = createAsyncThunk(
-  "bookGroups/modify",
+const modifyBookGroup_MW = createAsyncThunk(
+  'bookGroups/modify',
   async (group: IBookGroups, thunkApi) => {
-    thunkApi.dispatch(setSavingState("start"));
+    thunkApi.dispatch(setSavingState('start'));
     try {
       await modifyBooksGroup_DB(group);
-      thunkApi.dispatch(setSavingState("done"));
-      thunkApi.dispatch(fetchAllBookGroups());
+      thunkApi.dispatch(setSavingState('done'));
+      thunkApi.dispatch(fetchAllBookGroups_MW());
     } catch (error) {
-      thunkApi.dispatch(setSavingState("failed"));
+      thunkApi.dispatch(setSavingState('failed'));
     }
-  }
+  },
 );
 
-const deleteBookGroup = createAsyncThunk(
-  "bookGroups/delete",
+const deleteBookGroup_MW = createAsyncThunk(
+  'bookGroups/delete',
   async (groupId: string, thunkApi) => {
-    thunkApi.dispatch(setDeletingState("start"));
+    thunkApi.dispatch(setDeletingState('start'));
     try {
       await deleteBookGroup_DB(groupId);
-      thunkApi.dispatch(setDeletingState("done"));
-      thunkApi.dispatch(fetchAllBookGroups());
+      thunkApi.dispatch(setDeletingState('done'));
+      thunkApi.dispatch(fetchAllBookGroups_MW());
     } catch (error) {
-      thunkApi.dispatch(setDeletingState("failed"));
+      thunkApi.dispatch(setDeletingState('failed'));
     }
-  }
+  },
 );
 
 //#region Publish BookGroup
 const changePublishState = async (
   groupId: string,
   publish: boolean,
-  thunkApi: any
+  thunkApi: any,
 ) => {
-  thunkApi.dispatch(setSavingState("start"));
+  thunkApi.dispatch(setSavingState('start'));
   try {
     await publishBookGroup_DB(groupId, publish);
-    thunkApi.dispatch(setSavingState("done"));
+    thunkApi.dispatch(setSavingState('done'));
   } catch (error) {
-    thunkApi.dispatch(setSavingState("failed"));
+    thunkApi.dispatch(setSavingState('failed'));
   }
   return groupId;
 };
-const publishBookGroup = createAsyncThunk(
-  "bookGroups/publish",
+const publishBookGroup_MW = createAsyncThunk(
+  'bookGroups/publish',
   async (groupId: string, thunkApi) =>
-    await changePublishState(groupId, true, thunkApi)
+    await changePublishState(groupId, true, thunkApi),
 );
-const unpublishBookGroup = createAsyncThunk(
-  "bookGroups/unpublish",
+const unpublishBookGroup_MW = createAsyncThunk(
+  'bookGroups/unpublish',
   async (groupId: string, thunkApi) =>
-    await changePublishState(groupId, false, thunkApi)
+    await changePublishState(groupId, false, thunkApi),
 );
 //#endregion Publish BookGroup
 
 //#endregion Thunks
 
 export {
-  fetchAllBookGroups,
-  saveNewBookGroup,
-  modifyBookGroup,
-  deleteBookGroup,
-  publishBookGroup,
-  unpublishBookGroup,
+  fetchAllBookGroups_MW,
+  saveNewBookGroup_MW,
+  modifyBookGroup_MW,
+  deleteBookGroup_MW,
+  publishBookGroup_MW,
+  unpublishBookGroup_MW,
 };

@@ -2,9 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hooks";
 import {
-  deleteBookGroup,
-  publishBookGroup,
-  unpublishBookGroup,
+  deleteBookGroup_MW,
+  publishBookGroup_MW,
+  unpublishBookGroup_MW,
   IBooks
 } from "../../../redux/slices/bookGroups";
 
@@ -41,13 +41,13 @@ interface Props {
 export const BookListTile = (props: Props) => {
   const dispatch = useAppDispatch();
   const deleteGroup = () => {
-    dispatch(deleteBookGroup(props.id));
+    dispatch(deleteBookGroup_MW(props.id));
   };
   const changePublishState = () => {
     if (props.isPublished) {
-      dispatch(unpublishBookGroup(props.id));
+      dispatch(unpublishBookGroup_MW(props.id));
     } else {
-      dispatch(publishBookGroup(props.id));
+      dispatch(publishBookGroup_MW(props.id));
     }
   };
 

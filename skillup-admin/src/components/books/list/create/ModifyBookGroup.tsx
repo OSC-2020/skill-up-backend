@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { getBookGroupWithId_DB } from "../../../../Firebase/bookGroups/crud";
 import DBError from "../../../../Firebase/DBError";
 import { useAppDispatch } from "../../../../redux/hooks";
-import { IBookGroups, modifyBookGroup } from "../../../../redux/slices/bookGroups";
+import { IBookGroups, modifyBookGroup_MW } from "../../../../redux/slices/bookGroups";
 import { EditableBookGroupTile } from "./EditableBookTitle";
 
 interface Props {
@@ -33,7 +33,7 @@ export const ModifyBookGroup = (props: Props) => {
   }, [groupId]);
 
   const submitForm = (values: IBookGroups) => {
-    dispatch(modifyBookGroup(values));
+    dispatch(modifyBookGroup_MW(values));
   };
   if (notFound) {
     return <h2>Group Id not found</h2>;

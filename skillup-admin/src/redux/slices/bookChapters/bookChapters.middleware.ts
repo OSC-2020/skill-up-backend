@@ -15,7 +15,7 @@ import {
 } from './bookChapters.slice';
 
 //#region Thunks
-const fetchBookDetail = createAsyncThunk(
+const fetchBookDetail_MW = createAsyncThunk(
   'bookChapters/fetchBookDetail',
   async (bookId: string, thunkAPI): Promise<IBookChapters> => {
     thunkAPI.dispatch(setLoadedOnce(true));
@@ -23,7 +23,7 @@ const fetchBookDetail = createAsyncThunk(
   },
 );
 
-const createNewChapter = createAsyncThunk<
+const createNewChapter_MW = createAsyncThunk<
   // Return type of the payload creator
   void,
   // First argument to the payload creator
@@ -38,14 +38,14 @@ const createNewChapter = createAsyncThunk<
   const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
   try {
     await createNewChapter_DB(bookId, chapterInfo);
-    thunkApi.dispatch(fetchBookDetail(bookId));
+    thunkApi.dispatch(fetchBookDetail_MW(bookId));
   } catch (error) {
     console.log('🚀 ~ error', error);
     thunkApi.dispatch(setSavingState('failed'));
   }
 });
 
-const deleteChapter = createAsyncThunk<
+const deleteChapter_MW = createAsyncThunk<
   void,
   string,
   {
@@ -57,7 +57,7 @@ const deleteChapter = createAsyncThunk<
   const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
   try {
     await deleteChapter_DB(bookId, chapterId);
-    thunkApi.dispatch(fetchBookDetail(bookId));
+    thunkApi.dispatch(fetchBookDetail_MW(bookId));
   } catch (error) {
     thunkApi.dispatch(setDeletingState('failed'));
   }
@@ -77,7 +77,7 @@ const updateChapterTitle_MW = createAsyncThunk<
     const bookId = thunkApi.getState().currentBookDetail.bookInfo?.id as string;
     try {
       await updateChapterTitle_DB(bookId, data.chapterId, data.title);
-      thunkApi.dispatch(fetchBookDetail(bookId));
+      thunkApi.dispatch(fetchBookDetail_MW(bookId));
     } catch (error) {
       thunkApi.dispatch(setSavingState('failed'));
     }
@@ -86,8 +86,8 @@ const updateChapterTitle_MW = createAsyncThunk<
 //#endregion Thunks
 
 export {
-  fetchBookDetail,
-  createNewChapter,
-  deleteChapter,
+  fetchBookDetail_MW,
+  createNewChapter_MW,
+  deleteChapter_MW,
   updateChapterTitle_MW,
 };

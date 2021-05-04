@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from "../../../redux/hooks";
-import { createNewChapter, setSavingState } from '../../../redux/slices/bookChapters';
+import { createNewChapter_MW, setSavingState } from '../../../redux/slices/bookChapters';
 
 interface Props {
     savingState: '' | 'start' | 'done' | 'failed';
@@ -20,7 +20,7 @@ export const CreateChapterInput = (props: Props) => {
         const val = e.target.value;
         const isValidValue = val && val.trim() !== '';
         if (e.key === "Enter" && isValidValue) {
-            dispatch(createNewChapter({
+            dispatch(createNewChapter_MW({
                 title: val,
                 completedByCount: 0
             }));

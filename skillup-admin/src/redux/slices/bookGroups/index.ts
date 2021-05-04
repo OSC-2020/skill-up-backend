@@ -9,12 +9,12 @@ import {
 import bookGroupsSlice from './bookGroups.slice';
 
 import {
-  fetchAllBookGroups,
-  saveNewBookGroup,
-  modifyBookGroup,
-  deleteBookGroup,
-  publishBookGroup,
-  unpublishBookGroup,
+  fetchAllBookGroups_MW,
+  saveNewBookGroup_MW,
+  modifyBookGroup_MW,
+  deleteBookGroup_MW,
+  publishBookGroup_MW,
+  unpublishBookGroup_MW,
 } from './bookGroups.middleware';
 
 //#region  interfaces
@@ -27,12 +27,12 @@ export { selectSavingState, selectDeletingState, selectBookGroupWithId };
 
 //#region middleware
 export {
-  fetchAllBookGroups,
-  saveNewBookGroup,
-  modifyBookGroup,
-  deleteBookGroup,
-  publishBookGroup,
-  unpublishBookGroup,
+  fetchAllBookGroups_MW,
+  saveNewBookGroup_MW,
+  modifyBookGroup_MW,
+  deleteBookGroup_MW,
+  publishBookGroup_MW,
+  unpublishBookGroup_MW,
 };
 //#endregion middleware
 

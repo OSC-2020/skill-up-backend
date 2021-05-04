@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { fetchAllBookGroups } from "../../../redux/slices/bookGroups";
+import { fetchAllBookGroups_MW } from "../../../redux/slices/bookGroups";
 import { BookListTile } from "./BookListTile";
 
 export default function BooksList() {
@@ -9,7 +9,7 @@ export default function BooksList() {
   const bookGroupsSlice = useAppSelector((state) => state.bookGroups);
 
   if (!bookGroupsSlice.loadedOnce) {
-    dispatch(fetchAllBookGroups());
+    dispatch(fetchAllBookGroups_MW());
   }
 
   return (

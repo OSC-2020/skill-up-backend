@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchBookDetail, IBookChapters } from '../bookChapters';
+import { fetchBookDetail_MW, IBookChapters } from '../bookChapters';
 
 //#region Declarations
 
@@ -20,7 +20,7 @@ export const cachedSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(
-      fetchBookDetail.fulfilled,
+      fetchBookDetail_MW.fulfilled,
       (state, action: PayloadAction<IBookChapters>) => {
         state.bookDetailArr.push(action.payload);
       },

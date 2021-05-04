@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import {
-  deleteBookGroup,
-  fetchAllBookGroups,
-  publishBookGroup,
-  saveNewBookGroup,
-  unpublishBookGroup,
+  deleteBookGroup_MW,
+  fetchAllBookGroups_MW,
+  publishBookGroup_MW,
+  saveNewBookGroup_MW,
+  unpublishBookGroup_MW,
 } from './bookGroups.middleware';
 
 //#region Declarations
@@ -65,19 +65,19 @@ export const bookGroupsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchAllBookGroups.fulfilled,
+      fetchAllBookGroups_MW.fulfilled,
       (state, action: PayloadAction<IBookGroups[]>) => {
         state.groups = action.payload;
       },
     );
-    builder.addCase(saveNewBookGroup.fulfilled, (state) => {
+    builder.addCase(saveNewBookGroup_MW.fulfilled, (state) => {
       state.savingState = '';
     });
-    builder.addCase(deleteBookGroup.fulfilled, (state) => {
+    builder.addCase(deleteBookGroup_MW.fulfilled, (state) => {
       state.deletingState = '';
     });
     builder.addCase(
-      publishBookGroup.fulfilled,
+      publishBookGroup_MW.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.savingState = '';
         const grp = state.groups.find(
@@ -87,7 +87,7 @@ export const bookGroupsSlice = createSlice({
       },
     );
     builder.addCase(
-      unpublishBookGroup.fulfilled,
+      unpublishBookGroup_MW.fulfilled,
       (state, action: PayloadAction<string>) => {
         state.savingState = '';
         const grp = state.groups.find(
@@ -118,7 +118,6 @@ export const {
 } = bookGroupsSlice.actions;
 
 export type { IBooks, IBookGroups, IBookGoupsState };
-export { fetchAllBookGroups };
 export { selectSavingState, selectDeletingState, selectBookGroupWithId };
 export default bookGroupsSlice.reducer;
 //#endregion exports

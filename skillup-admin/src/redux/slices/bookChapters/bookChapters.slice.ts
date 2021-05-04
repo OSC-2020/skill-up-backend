@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {
-  createNewChapter,
-  deleteChapter,
-  fetchBookDetail,
+  createNewChapter_MW,
+  deleteChapter_MW,
+  fetchBookDetail_MW,
   updateChapterTitle_MW,
 } from './bookChapters.middleware';
 
@@ -59,15 +59,15 @@ export const bookChaptersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchBookDetail.fulfilled,
+      fetchBookDetail_MW.fulfilled,
       (state, action: PayloadAction<IBookChapters>) => {
         state.bookInfo = action.payload;
       },
     );
-    builder.addCase(createNewChapter.fulfilled, (state, action) => {
+    builder.addCase(createNewChapter_MW.fulfilled, (state, action) => {
       state.savingState = 'done';
     });
-    builder.addCase(deleteChapter.fulfilled, (state, action) => {
+    builder.addCase(deleteChapter_MW.fulfilled, (state, action) => {
       state.deletingState = 'done';
     });
     builder.addCase(updateChapterTitle_MW.fulfilled, (state, action) => {

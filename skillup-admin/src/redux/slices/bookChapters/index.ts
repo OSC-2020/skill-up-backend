@@ -10,9 +10,9 @@ import {
 import bookChaptersSlice from './bookChapters.slice';
 
 import {
-  fetchBookDetail,
-  createNewChapter,
-  deleteChapter,
+  fetchBookDetail_MW,
+  createNewChapter_MW,
+  deleteChapter_MW,
   updateChapterTitle_MW,
 } from './bookChapters.middleware';
 
@@ -30,9 +30,9 @@ export { setLoadedOnce, setSavingState, setDeletingState };
 
 //#region middleware
 export {
-  fetchBookDetail,
-  createNewChapter,
-  deleteChapter,
+  fetchBookDetail_MW,
+  createNewChapter_MW,
+  deleteChapter_MW,
   updateChapterTitle_MW,
 };
 //#endregion middleware

@@ -3,7 +3,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
-  saveNewBookGroup,
+  saveNewBookGroup_MW,
   IBookGroups,
   IBooks,
   selectSavingState,
@@ -37,7 +37,7 @@ export const CreateBookGroup = (props: Props) => {
   };
 
   const submitForm = (values: IBookGroups) => {
-    dispatch(saveNewBookGroup(values));
+    dispatch(saveNewBookGroup_MW(values));
   };
   return (
     <section className="text-gray-600 body-font w-full">

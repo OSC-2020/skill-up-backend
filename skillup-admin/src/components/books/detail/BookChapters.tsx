@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { deleteChapter, fetchBookDetail, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
+import { deleteChapter_MW, fetchBookDetail_MW, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
 import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
@@ -16,12 +16,12 @@ export const BookChapters = ({ match }: any) => {
   const bookId = match.params.bookId;
 
   if (!bookDetailSlice.loadedOnce) {
-    dispatch(fetchBookDetail(bookId));
+    dispatch(fetchBookDetail_MW(bookId));
   }
   const bookInfo = bookDetailSlice.bookInfo;
 
   const deleteChapterFromList = (chapterId: string) => {
-    dispatch(deleteChapter(chapterId));
+    dispatch(deleteChapter_MW(chapterId));
   };
   const updateChapterTitle = (chapterId: string, title: string) => {
     dispatch(updateChapterTitle_MW({ chapterId, title }));
