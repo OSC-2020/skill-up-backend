@@ -9,7 +9,6 @@ import {
 import {
   IBookGroups,
   bgSetDeletingState_AN,
-  bgSetLoadedOnce_AN,
   bgSetSavingState_AN,
 } from './bookGroups.slice';
 
@@ -17,7 +16,6 @@ import {
 const fetchAllBookGroups_MW = createAsyncThunk(
   'bookGroups/fetchAll',
   async (_, thunkAPI) => {
-    thunkAPI.dispatch(bgSetLoadedOnce_AN(true));
     const booksDocs = await getAllBooks_DB();
     const books: any = [];
     booksDocs.docs.forEach((doc) => {

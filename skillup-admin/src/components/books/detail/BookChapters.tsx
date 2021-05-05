@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { bcMoveChapterDownInList_AN, bcMoveChapterUpInList_AN, deleteChapter_MW, fetchBookDetail_MW, updateChapterOrder_MW, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
 import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
+import { selectCurrentBookDetail } from '../../../redux/store';
 import { MobileLayout } from "../../shared/MobileLayout";
 import ScrollToBottom from "../../shared/ScrollToBottom";
 import "./BookChapters.css";
@@ -12,15 +14,14 @@ import { CreateChapterInput } from "./CreateChapterInput";
 
 export const BookChapters = ({ match }: any) => {
   const dispatch = useAppDispatch();
-  const bookDetailSlice = useAppSelector((state) => state.currentBookDetail);
+  const bookDetailSlice = useAppSelector(selectCurrentBookDetail);
   const bookId = match.params.bookId;
   const bookInfo = bookDetailSlice.bookInfo;
   const isChapterOrderModified = bookDetailSlice.isChapterOrderModified;
 
-  if (!bookDetailSlice.loadedOnce) {
+  useEffect(() => {
     dispatch(fetchBookDetail_MW(bookId));
-  }
-
+  }, [bookId, dispatch]);
   const deleteChapterFromList = (chapterId: string) => {
     dispatch(deleteChapter_MW(chapterId));
   };
@@ -77,3 +78,4 @@ export const BookChapters = ({ match }: any) => {
     </main>
   );
 };
+

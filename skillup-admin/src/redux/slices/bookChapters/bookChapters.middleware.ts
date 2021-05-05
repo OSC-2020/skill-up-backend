@@ -10,19 +10,24 @@ import { AppDispatch, RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {
   bcSetDeletingState_AN,
-  bcSetLoadedOnce_AN,
   bcSetSavingState_AN,
   IBookChapters,
 } from './bookChapters.slice';
 
 //#region Thunks
-const fetchBookDetail_MW = createAsyncThunk(
-  'bookChapters/fetchBookDetail',
-  async (bookId: string, thunkAPI): Promise<IBookChapters> => {
-    thunkAPI.dispatch(bcSetLoadedOnce_AN(true));
-    return (await getBookDetail_DB(bookId)) as IBookChapters;
-  },
-);
+const fetchBookDetail_MW = createAsyncThunk<
+  IBookChapters,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>('bookChapters/fetchBookDetail', async (bookId: string, thunkApi) => {
+  // const bookInfo = thunkApi.getState().cached.bookDetailMap[bookId];
+
+  // TODO: once all of cached is fully operational, after #13 is resolved, use cache above
+  return (await getBookDetail_DB(bookId)) as IBookChapters;
+});
 
 const createNewChapter_MW = createAsyncThunk<
   // Return type of the payload creator
@@ -41,7 +46,6 @@ const createNewChapter_MW = createAsyncThunk<
     await createNewChapter_DB(bookId, chapterInfo);
     thunkApi.dispatch(fetchBookDetail_MW(bookId));
   } catch (error) {
-    console.log('🚀 ~ error', error);
     thunkApi.dispatch(bcSetSavingState_AN('failed'));
   }
 });

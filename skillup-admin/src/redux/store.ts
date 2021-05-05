@@ -19,3 +19,9 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export type flagStatus = '' | 'start' | 'done' | 'failed';
+
+const selectBookGroupSlice = (state: RootState) => state.bookGroups;
+const selectCurrentBookDetail = (state: RootState) => state.currentBookDetail;
+const selectCached = (state: RootState) => state.cached;
+
+export { selectBookGroupSlice, selectCached, selectCurrentBookDetail };

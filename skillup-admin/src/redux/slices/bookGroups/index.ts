@@ -5,6 +5,8 @@ import {
   selectSavingState,
   selectDeletingState,
   selectBookGroupWithId,
+  bgSetSavingState_AN,
+  bgSetDeletingState_AN,
 } from './bookGroups.slice';
 import bookGroupsSlice from './bookGroups.slice';
 
@@ -24,6 +26,10 @@ export type { IBooks, IBookGroups, IBookGoupsState };
 //#region selectors
 export { selectSavingState, selectDeletingState, selectBookGroupWithId };
 //#endregion selectors
+
+//#region actions
+export { bgSetSavingState_AN, bgSetDeletingState_AN };
+//#endregion actions
 
 //#region middleware
 export {

@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { fetchAllBookGroups_MW } from "../../../redux/slices/bookGroups";
+import { selectBookGroupSlice } from '../../../redux/store';
 import { BookListTile } from "./BookListTile";
 
 export default function BooksList() {
   const dispatch = useAppDispatch();
-  const bookGroupsSlice = useAppSelector((state) => state.bookGroups);
+  const bookGroupsSlice = useAppSelector(selectBookGroupSlice);
 
-  if (!bookGroupsSlice.loadedOnce) {
+  useEffect(() => {
     dispatch(fetchAllBookGroups_MW());
-  }
+  }, [dispatch]);
 
   return (
     <section className="text-gray-600 body-font px-5 w-full">

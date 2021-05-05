@@ -27,14 +27,12 @@ interface IBookGroups {
 interface IBookGoupsState {
   loading: 'idle' | 'pending';
   groups: IBookGroups[];
-  loadedOnce: boolean;
   savingState: '' | 'start' | 'done' | 'failed';
   deletingState: '' | 'start' | 'done' | 'failed';
 }
 
 const initialState: IBookGoupsState = {
   loading: 'idle',
-  loadedOnce: false,
   groups: [],
   savingState: '',
   deletingState: '',
@@ -47,9 +45,6 @@ export const bookGroupsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    bgSetLoadedOnce_AN(state, action: PayloadAction<boolean>) {
-      state.loadedOnce = action.payload;
-    },
     bgSetSavingState_AN(
       state,
       action: PayloadAction<'' | 'start' | 'done' | 'failed'>,
@@ -112,7 +107,6 @@ const selectBookGroupWithId = (groupId: string) => (state: RootState) =>
 
 //#region exports
 export const {
-  bgSetLoadedOnce_AN,
   bgSetSavingState_AN,
   bgSetDeletingState_AN,
 } = bookGroupsSlice.actions;

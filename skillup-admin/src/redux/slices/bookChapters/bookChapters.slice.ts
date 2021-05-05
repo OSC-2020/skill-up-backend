@@ -28,12 +28,10 @@ interface IBookChapters {
 
 interface IBookChaptersState extends IFlags {
   bookInfo: IBookChapters | null;
-  loadedOnce: boolean;
   isChapterOrderModified: boolean;
 }
 
 const initialState: IBookChaptersState = {
-  loadedOnce: false,
   bookInfo: null,
   saving: '',
   deleting: '',
@@ -49,9 +47,6 @@ export const bookChaptersSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    bcSetLoadedOnce_AN(state, action: PayloadAction<boolean>) {
-      state.loadedOnce = action.payload;
-    },
     bcSetSavingState_AN(state, action: PayloadAction<flagStatus>) {
       state.saving = action.payload;
     },
@@ -108,7 +103,6 @@ const selectDeletingState = (state: RootState) =>
 
 //#region exports
 export const {
-  bcSetLoadedOnce_AN,
   bcSetSavingState_AN,
   bcSetDeletingState_AN,
   bcMoveChapterUpInList_AN,

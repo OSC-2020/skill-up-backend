@@ -4,11 +4,11 @@ import { fetchBookDetail_MW, IBookChapters } from '../bookChapters';
 //#region Declarations
 
 interface IBookGoupsState {
-  bookDetailArr: IBookChapters[];
+  bookDetailMap: { [key: string]: IBookChapters };
 }
 
 const initialState: IBookGoupsState = {
-  bookDetailArr: [],
+  bookDetailMap: {},
 };
 //#endregion Declarations
 
@@ -22,7 +22,7 @@ export const cachedSlice = createSlice({
     builder.addCase(
       fetchBookDetail_MW.fulfilled,
       (state, action: PayloadAction<IBookChapters>) => {
-        state.bookDetailArr.push(action.payload);
+        state.bookDetailMap[action.payload.id] = action.payload;
       },
     );
   },
