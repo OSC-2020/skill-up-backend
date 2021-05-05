@@ -4,15 +4,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Helpful Pointers
 
-| Css                       | Links                                               |
+| Css                         | Links                                               |
 | --------------------------- | --------------------------------------------------- |
 | CSS Utility                 | [tailwind-css](https://tailwindcss.com/)            |
 | Taiwind pre-made components | [tail-blocks](https://mertjf.github.io/tailblocks/) |
 
 ### Helpful extensions
+
 1. ES7 React/Redux/GraphQL/React-Native snippets [link](https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets).
 2. Tailwind CSS IntelliSense [link](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss).
 
+## Bootstrapping the project
+
+1. Install all the required npm packages by running `npm i` in root directory.
+2. In the root directory create a `.env` file and add all the required values in it. (contact project maintainers for it.)
+
+   Be cautious of the syntax of `.env` file, it is a major source of bugs in beginning
 
 ## Available Scripts
 
