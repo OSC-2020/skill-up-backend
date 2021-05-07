@@ -1,7 +1,7 @@
 import { firebaseInstance } from '..';
 import { IBookGroups } from '../../redux/slices/bookGroups';
 import RootCollections from '../CollectionNames';
-import DBError from '../DBError';
+import DBError from '../../errors/DBError';
 
 const bookGroupsRef = firebaseInstance.firestore.collection(
   `/${RootCollections.BOOK_GROUPS}`,
@@ -26,22 +26,6 @@ const saveBooksGroup_DB = async (group: IBookGroups) => {
     txn.set(groupDoc, group);
   });
 };
-
-const modifyBooksGroup_DB = async (group: IBookGroups) => {
-  return firebaseInstance.firestore.runTransaction(async (txn) => {
-    const groupDoc = bookGroupsRef.doc();
-    group.books.forEach((book) => {
-      const doc = booksRef.doc(book.id);
-      txn.update(doc, book);
-    });
-
-    txn.update(groupDoc, group);
-  });
-};
-const publishBookGroup_DB = async (groupId: string, publish = false) => {
-  const doc = bookGroupsRef.doc(groupId);
-  await doc.update({ isPublished: publish });
-};
 //#region Create
 
 //#region Read
@@ -60,6 +44,22 @@ const getBookGroupWithId_DB = async (id: string): Promise<IBookGroups> => {
 //#region Read
 
 //#region Update
+const modifyBooksGroup_DB = async (group: IBookGroups) => {
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    const groupDoc = bookGroupsRef.doc();
+    group.books.forEach((book) => {
+      const doc = booksRef.doc(book.id);
+      txn.update(doc, book);
+    });
+
+    txn.update(groupDoc, group);
+  });
+};
+
+const publishBookGroup_DB = async (groupId: string, publish = false) => {
+  const doc = bookGroupsRef.doc(groupId);
+  await doc.update({ isPublished: publish });
+};
 //#region Update
 
 //#region Delete
