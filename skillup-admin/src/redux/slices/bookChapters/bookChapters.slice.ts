@@ -22,6 +22,7 @@ interface IBookChapters {
   totalChapters: number;
   completedByCount: number;
   chapters: IChapterInfo[];
+  parentGroupIds?: string[];
 }
 
 //#region Declarations

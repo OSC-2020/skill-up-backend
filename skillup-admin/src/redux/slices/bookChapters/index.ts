@@ -16,6 +16,7 @@ import {
   deleteChapter_MW,
   updateChapterTitle_MW,
   updateChapterOrder_MW,
+  updateBookTitle_MW,
 } from './bookChapters.middleware';
 
 //#region  interfaces
@@ -42,6 +43,7 @@ export {
   deleteChapter_MW,
   updateChapterTitle_MW,
   updateChapterOrder_MW,
+  updateBookTitle_MW,
 };
 //#endregion middleware
 

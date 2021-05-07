@@ -3,6 +3,7 @@ import {
   createNewChapter_DB,
   deleteChapter_DB,
   getBookDetail_DB,
+  updateBookTitle_DB,
   updateChapterOrder_DB,
   updateChapterTitle_DB,
 } from '../../../Firebase/bookChapters/crud';
@@ -107,6 +108,25 @@ const updateChapterOrder_MW = createAsyncThunk<
     thunkApi.dispatch(bcSetSavingState_AN('failed'));
   }
 });
+
+const updateBookTitle_MW = createAsyncThunk<
+  void,
+  string,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+  }
+>('bookChapters/updateBookTitle', async (newTitle: string, thunkApi) => {
+  const bookInfo = thunkApi.getState().currentBookDetail.bookInfo;
+  const bookId = bookInfo?.id as string;
+  thunkApi.dispatch(bcSetSavingState_AN('start'));
+  try {
+    await updateBookTitle_DB(bookId, newTitle);
+    thunkApi.dispatch(fetchBookDetail_MW(bookId));
+  } catch (error) {
+    thunkApi.dispatch(bcSetSavingState_AN('failed'));
+  }
+});
 //#endregion Thunks
 
 export {
@@ -115,4 +135,5 @@ export {
   deleteChapter_MW,
   updateChapterTitle_MW,
   updateChapterOrder_MW,
+  updateBookTitle_MW,
 };

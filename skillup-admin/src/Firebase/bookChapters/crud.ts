@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import { firebaseInstance } from '..';
 import { IBookChapters } from '../../redux/slices/bookChapters';
+import { IBookGroups, IBooks } from '../../redux/slices/bookGroups';
 import {
   IChapterDetail,
   IChapterInfo,
@@ -9,6 +10,9 @@ import RootCollections, { BookChaptersCollections } from '../CollectionNames';
 
 const booksRef = firebaseInstance.firestore.collection(
   `/${RootCollections.BOOKS}`,
+);
+const bookGroupsRef = firebaseInstance.firestore.collection(
+  `/${RootCollections.BOOK_GROUPS}`,
 );
 
 //#region Read
@@ -101,6 +105,27 @@ const updateChapterTitle_DB = async (
   });
 };
 
+const updateBookTitle_DB = async (bookId: string, newTitle: string) => {
+  return firebaseInstance.firestore.runTransaction(async (txn) => {
+    const bookDoc = booksRef.doc(bookId);
+    let { parentGroupIds } = (await txn.get(bookDoc)).data() as IBookChapters;
+
+    const groupsToBeUpdated = new Map<string, IBooks[]>();
+    for (const groupId of parentGroupIds as string[]) {
+      const bookGroup = bookGroupsRef.doc(groupId);
+      const { books } = (await txn.get(bookGroup)).data() as IBookGroups;
+      groupsToBeUpdated.set(groupId, books);
+    }
+
+    txn.update(bookDoc, { title: newTitle });
+    for (const [groupId, books] of groupsToBeUpdated.entries()) {
+      const book = books.find((book) => book.id === bookId) as IBooks;
+      book.title = newTitle;
+      txn.update(bookGroupsRef.doc(groupId), { books });
+    }
+  });
+};
+
 const updateChapterOrder_DB = async (
   bookId: string,
   chapters: IChapterInfo[],
@@ -115,4 +140,5 @@ export {
   deleteChapter_DB,
   updateChapterTitle_DB,
   updateChapterOrder_DB,
+  updateBookTitle_DB,
 };
