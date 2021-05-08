@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FaArrowDown, FaArrowUp, FaTrash } from "react-icons/fa";
-import { dynamicCSSClass } from "../../../utilities/string";
+import { dynamicCSSClass } from "../../../utilities/string.utility";
 
 interface Props {
   id: string;

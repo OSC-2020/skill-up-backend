@@ -1,4 +1,4 @@
-import Firebase from "./_init/init";
+import Firebase from "./_init/init.fb";
 
 const firebaseInstance = new Firebase();
 

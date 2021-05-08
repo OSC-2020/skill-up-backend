@@ -3,12 +3,12 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { bcMoveChapterDownInList_AN, bcMoveChapterUpInList_AN, deleteChapter_MW, fetchBookDetail_MW, updateChapterOrder_MW, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
 import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
 import { selectCurrentBookDetail } from '../../../redux/store';
-import { MobileLayout } from "../../shared/MobileLayout";
-import ScrollToBottom from "../../shared/ScrollToBottom";
-import "./BookChapters.css";
-import BookChaptersSideNav from "./BookDetailSideNav";
-import ChapterTile from "./ChapterTile";
-import { CreateChapterInput } from "./CreateChapterInput";
+import { MobileLayout } from "../../shared/MobileLayout.component";
+import ScrollToBottom from "../../shared/ScrollToBottom.component";
+import "./BookChapters.component.css";
+import BookChaptersSideNav from "./BookDetailSideNav.component";
+import ChapterTile from "./ChapterTile.component";
+import { CreateChapterInput } from "./CreateChapterInput.component";
 
 
 

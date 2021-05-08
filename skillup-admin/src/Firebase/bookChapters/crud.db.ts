@@ -6,7 +6,7 @@ import {
   IChapterDetail,
   IChapterInfo,
 } from '../../redux/slices/chapterDetail/chapterDetail';
-import RootCollections, { BookChaptersCollections } from '../CollectionNames';
+import RootCollections, { BookChaptersCollections } from '../CollectionNames.db';
 
 const booksRef = firebaseInstance.firestore.collection(
   `/${RootCollections.BOOKS}`,

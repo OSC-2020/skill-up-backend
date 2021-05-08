@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HeaderTab from './HeaderTab';
+import HeaderTab from './HeaderTab.component';
 import { FaHome, FaBook, FaChargingStation } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 

@@ -1,11 +1,11 @@
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getBookGroupWithId_DB } from "../../../../Firebase/bookGroups/crud";
-import DBError from "../../../../errors/DBError";
+import { getBookGroupWithId_DB } from "../../../../Firebase/bookGroups/crud.db";
+import DBError from "../../../../errors/db.error";
 import { useAppDispatch } from "../../../../redux/hooks";
 import { IBookGroups, modifyBookGroup_MW } from "../../../../redux/slices/bookGroups";
-import { EditableBookGroupTile } from "./EditableBookTitle";
+import { EditableBookGroupTile } from "./EditableBookTitle.component";
 
 interface Props {
   groupSize?: number;

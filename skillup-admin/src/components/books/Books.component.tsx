@@ -1,8 +1,8 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import BooksList from "./list/BooksList";
-import { BookChapters } from "./detail/BookChapters";
-import { CreateBookGroup } from "./list/create/CreateBookGroup";
-import { ModifyBookGroup } from "./list/create/ModifyBookGroup";
+import BooksList from "./list/BooksList.component";
+import { BookChapters } from "./detail/BookChapters.component";
+import { CreateBookGroup } from "./list/create/CreateBookGroup.component";
+import { ModifyBookGroup } from "./list/create/ModifyBookGroup.component";
 
 export const Books = () => {
   return (

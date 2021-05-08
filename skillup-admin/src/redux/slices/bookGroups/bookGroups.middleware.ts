@@ -5,7 +5,7 @@ import {
   modifyBooksGroup_DB,
   publishBookGroup_DB,
   saveBooksGroup_DB,
-} from '../../../Firebase/bookGroups/crud';
+} from '../../../Firebase/bookGroups/crud.db';
 import {
   IBookGroups,
   bgSetDeletingState_AN,

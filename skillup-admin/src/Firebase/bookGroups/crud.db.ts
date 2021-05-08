@@ -1,7 +1,7 @@
 import { firebaseInstance } from '..';
 import { IBookGroups } from '../../redux/slices/bookGroups';
 import RootCollections from '../CollectionNames';
-import DBError from '../../errors/DBError';
+import DBError from '../../errors/db.error';
 
 const bookGroupsRef = firebaseInstance.firestore.collection(
   `/${RootCollections.BOOK_GROUPS}`,

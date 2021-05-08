@@ -8,8 +8,8 @@ import {
   IBooks,
   selectSavingState,
 } from "../../../../redux/slices/bookGroups";
-import { arrayOfSize } from "../../../../utilities/array";
-import { EditableBookGroupTile } from "./EditableBookTitle";
+import { arrayOfSize } from "../../../../utilities/array.utility";
+import { EditableBookGroupTile } from "./EditableBookTitle.component";
 
 interface Props {
   groupSize?: number;

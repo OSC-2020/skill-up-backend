@@ -6,7 +6,7 @@ import {
   updateBookTitle_DB,
   updateChapterOrder_DB,
   updateChapterTitle_DB,
-} from '../../../Firebase/bookChapters/crud';
+} from '../../../Firebase/bookChapters/crud.db';
 import { AppDispatch, RootState } from '../../store';
 import { IChapterInfo } from '../chapterDetail/chapterDetail';
 import {

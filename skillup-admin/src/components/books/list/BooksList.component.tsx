@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { fetchAllBookGroups_MW } from "../../../redux/slices/bookGroups";
 import { selectBookGroupSlice } from '../../../redux/store';
-import { BookListTile } from "./BookListTile";
+import { BookListTile } from "./BookListTile.component";
 
 export default function BooksList() {
   const dispatch = useAppDispatch();

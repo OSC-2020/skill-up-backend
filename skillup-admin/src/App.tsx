@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Header from "./components/layout/header/Header";
-import { Books } from "./components/books/Books";
+import Header from "./components/layout/header/Header.component";
+import { Books } from "./components/books/Books.component";
 
 function App() {
   return (
