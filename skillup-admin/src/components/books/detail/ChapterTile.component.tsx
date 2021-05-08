@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { FaArrowDown, FaArrowUp, FaTrash } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp, FaLink, FaTrash } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 import { dynamicCSSClass } from "../../../utilities/string.utility";
 
 interface Props {
@@ -74,6 +75,12 @@ export default class ChapterTile extends Component<Props, State> {
         </span>
         {!this.state.currentlyEditing && (
           <section className="flex items-center justify-between">
+            <NavLink
+              to={`/books/chapter-detail/${this.props.id}`}
+              className="w-2/5"
+            >
+              <FaLink color="indigo" className="text-base" />
+            </NavLink>
             <FaTrash
               color="red"
               className="cursor-pointer text-base w-2/5"
