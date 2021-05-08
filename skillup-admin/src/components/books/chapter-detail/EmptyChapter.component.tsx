@@ -1,7 +1,5 @@
-import React from 'react'
-
 interface Props {
-
+    addContentCallback: Function;
 }
 
 export const EmptyChapter = (props: Props) => {
@@ -12,7 +10,7 @@ export const EmptyChapter = (props: Props) => {
                     <h1 className="flex-grow sm:pr-16 text-2xl font-medium title-font text-gray-900">
                         No content available.
                     </h1>
-                    <button className="skillup-btn-success">
+                    <button className="skillup-btn-success" onClick={() => props.addContentCallback(true)}>
                         Add content
                     </button>
                 </div>
