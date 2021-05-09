@@ -7,6 +7,15 @@ body {
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input {
+    @apply focus:outline-none;
+  }
+  textarea {
+    @apply focus:outline-none;
+  }
+}
+
 @layer utilities {
   @variants hover,
     focus {

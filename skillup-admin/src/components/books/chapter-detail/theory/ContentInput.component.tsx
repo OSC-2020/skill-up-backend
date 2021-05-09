@@ -22,7 +22,7 @@ export const TheoryContentInput = (props: Props) => {
 
     return (
         <section className={containerCss}>
-            <textarea className="w-full px-4 py-2 focus:outline-none resize-none"
+            <textarea className="w-full px-4 py-2 resize-none"
                 placeholder="Add content here"
                 onFocus={() => setIsTextAreaInFocus(true)}
                 onBlur={() => setIsTextAreaInFocus(false)} />
