@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 interface Props {
-
+    isQuizOption?: boolean;
 }
 
 export enum EContentType {
@@ -12,7 +12,7 @@ export enum EContentType {
 export const TheoryContentInput = (props: Props) => {
     const [contentType, setContentType] = useState(EContentType.TEXT);
     const [isTextAreaInFocus, setIsTextAreaInFocus] = useState(false);
-    
+
     const getPillCss = (active: boolean) => {
         const activeCss = `skillup-background-color-primary text-white`;
         const inactiveCss = `bg-gray-300 skillup-text-color-primary`
@@ -26,15 +26,23 @@ export const TheoryContentInput = (props: Props) => {
                 placeholder="Add content here"
                 onFocus={() => setIsTextAreaInFocus(true)}
                 onBlur={() => setIsTextAreaInFocus(false)} />
-            <article className="flex pt-2 pb-3 px-2">
-                <div className={getPillCss(contentType === EContentType.TEXT) + " mr-2"}
-                    onClick={() => setContentType(EContentType.TEXT)}>
-                    Text
+            <article className="flex pt-2 pb-3 px-2 justify-between">
+                <article className="flex">
+                    <div className={getPillCss(contentType === EContentType.TEXT) + " mr-2"}
+                        onClick={() => setContentType(EContentType.TEXT)}>
+                        Text
                 </div>
-                <div className={getPillCss(contentType === EContentType.CODE)}
-                    onClick={() => setContentType(EContentType.CODE)}>
-                    Code
+                    <div className={getPillCss(contentType === EContentType.CODE)}
+                        onClick={() => setContentType(EContentType.CODE)}>
+                        Code
                 </div>
+                </article>
+                {props.isQuizOption ?
+                    <article>
+                        <input type="checkbox" className="mr-2" />
+                        <label>Mark as correct answer</label>
+                    </article>
+                    : null}
             </article>
         </section>
     )

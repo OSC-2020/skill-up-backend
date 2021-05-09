@@ -18,8 +18,13 @@ export const ChapterDetail = (props: Props) => {
                 <PageTypeSelector
                     pageType={currentPageType}
                     changePageTypeCallback={(pageType: EPageType) => setCurrentPageType(pageType)} />
-                <TheoryDynamicContent />
-                <ChapterDetailFooter />
+                {currentPageType === EPageType.THEORY ?
+                    <TheoryDynamicContent /> :
+                    <QuizTemplate />
+                }
+                <section className="mt-8">
+                    <ChapterDetailFooter />
+                </section>
             </main>
         )
     }
