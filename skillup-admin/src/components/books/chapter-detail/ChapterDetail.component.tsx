@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { EmptyChapter } from "./EmptyChapter.component";
 import { PageTypeSelector } from "./PageTypeSelector.component";
 import { ChapterDetailFooter } from "./Footer.component";
+import { TheoryDynamicContent } from "./theory/DynamicContent.component";
 interface Props {
 
 }
@@ -13,10 +14,11 @@ export const ChapterDetail = (props: Props) => {
 
     function getContentEditor() {
         return (
-        <main>
-            <PageTypeSelector />
-            <ChapterDetailFooter />
-        </main>
+            <main className="py-8">
+                <PageTypeSelector />
+                <TheoryDynamicContent />
+                <ChapterDetailFooter />
+            </main>
         )
     }
     const pageContent = contentAvailable || isUpdatingContent ? getContentEditor() :

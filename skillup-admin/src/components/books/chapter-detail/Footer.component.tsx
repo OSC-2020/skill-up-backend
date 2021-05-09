@@ -13,7 +13,7 @@ export const ChapterDetailFooter = (props: Props) => {
             {props.hidePrev ?
                 null : <FaArrowLeft />
             }
-            <input className="px-4 py-1 w-1/4 border border-gray-300" placeholder="Footer text" />
+            <input className="px-4 py-1 w-1/4 border border-gray-300 rounded" placeholder="Footer text" />
             {props.hideNext ?
                 null : <FaArrowRight />
             }
