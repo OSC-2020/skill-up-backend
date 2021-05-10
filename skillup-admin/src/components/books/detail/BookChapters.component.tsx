@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { bcMoveChapterDownInList_AN, bcMoveChapterUpInList_AN, deleteChapter_MW, fetchBookDetail_MW, updateChapterOrder_MW, updateChapterTitle_MW } from '../../../redux/slices/bookChapters';
-import { IChapterInfo } from '../../../redux/slices/chapterDetail/chapterDetail';
+import { IChapterInfo } from '../../../redux/slices/chapterDetail';
 import { selectCurrentBookDetail } from '../../../redux/store';
 import { MobileLayout } from "../../shared/MobileLayout.component";
 import ScrollToBottom from "../../shared/ScrollToBottom.component";

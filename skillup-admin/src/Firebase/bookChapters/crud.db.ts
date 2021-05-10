@@ -5,7 +5,7 @@ import { IBookGroups, IBooks } from '../../redux/slices/bookGroups';
 import {
   IChapterDetail,
   IChapterInfo,
-} from '../../redux/slices/chapterDetail/chapterDetail';
+} from '../../redux/slices/chapterDetail';
 import RootCollections, { BookChaptersCollections } from '../CollectionNames.db';
 
 const booksRef = firebaseInstance.firestore.collection(

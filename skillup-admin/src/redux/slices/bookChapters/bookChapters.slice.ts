@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { moveAnElementInArray } from '../../../utilities/array.utility';
 import { flagStatus, RootState } from '../../store';
-import { IChapterInfo } from '../chapterDetail/chapterDetail';
+import { IChapterInfo } from '../chapterDetail';
+
 import {
   createNewChapter_MW,
   deleteChapter_MW,

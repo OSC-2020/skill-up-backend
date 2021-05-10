@@ -8,7 +8,7 @@ import {
   updateChapterTitle_DB,
 } from '../../../Firebase/bookChapters/crud.db';
 import { AppDispatch, RootState } from '../../store';
-import { IChapterInfo } from '../chapterDetail/chapterDetail';
+import { IChapterInfo } from '../chapterDetail';
 import {
   bcSetDeletingState_AN,
   bcSetSavingState_AN,
