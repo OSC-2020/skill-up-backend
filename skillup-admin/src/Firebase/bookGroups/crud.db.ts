@@ -1,6 +1,7 @@
 import { firebaseInstance } from '..';
 import { IBookGroups } from '../../redux/slices/bookGroups';
 import RootCollections from '../CollectionNames.db';
+import WidgetTypes from '../WidgetTypes.db';
 import DBError from '../../errors/db.error';
 
 const bookGroupsRef = firebaseInstance.firestore.collection(
@@ -12,12 +13,12 @@ const booksRef = firebaseInstance.firestore.collection(
 
 //#region Create
 const saveBooksGroup_DB = async (group: IBookGroups) => {
-  group.uiType = group.uiType || 100;
+  group.uiType = group.uiType || WidgetTypes.GRID;
   return firebaseInstance.firestore.runTransaction(async (txn) => {
     group.books.forEach((book) => {
       const doc = booksRef.doc();
       book.id = doc.id;
-      book.uiType = book.uiType || 100;
+      book.uiType = book.uiType || WidgetTypes.BOOK_INFO_TILE;
 
       txn.set(doc, book);
     });
